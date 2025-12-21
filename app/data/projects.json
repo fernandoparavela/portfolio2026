@@ -30,7 +30,6 @@
         "textColor": "text-black",
         "image": "/cards/deutsche-telekom.png",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "",
         "designedAt": "Work & Co",
         "protected": true,
         "iconColor": "#000",
@@ -57,22 +56,7 @@
     },
     {
         "id": "3",
-        "slug": "claro-flex",
-        "title": "Claro Flex",
-        "category": "Telecom app",
-        "color": "bg-[#ff3b30]",
-        "textColor": "text-white",
-        "image": "/cards/claro.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "Cannes Lions 2023",
-        "designedAt": "Try (WPP Group)",
-        "protected": true,
-        "iconColor": "#000",
-        "gallery": []
-    },
-    {
-        "id": "4",
-        "slug": "vivo-casa-inteligente",
+        "slug": "vivo",
         "title": "Vivo Casa Inteligente",
         "category": "Smart home app",
         "color": "bg-[#f4f4f4]",
@@ -82,10 +66,19 @@
         "awards": "BDA 2023",
         "designedAt": "Work & Co",
         "iconColor": "#000",
-        "gallery": []
+        "gallery": [
+            "/projects/vivo/vivo-1.png",
+            "/projects/vivo/vivo-2.png",
+            "/projects/vivo/vivo-3.png",
+            "/projects/vivo/vivo-4.png",
+            "/projects/vivo/vivo-5.png",
+            "/projects/vivo/vivo-6.png",
+            "/projects/vivo/vivo-7.png",
+            "/projects/vivo/vivo-8.png"
+        ]
     },
     {
-        "id": "5",
+        "id": "4",
         "slug": "farm-rio",
         "title": "Farm Rio",
         "category": "E-commerce",
@@ -97,6 +90,28 @@
         "designedAt": "Accenture Song",
         "iconColor": "#fff",
         "gallery": []
+    },
+    {
+        "id": "5",
+        "slug": "claro-flex",
+        "title": "Claro Flex",
+        "category": "Telecom app",
+        "color": "bg-[#ff3b30]",
+        "textColor": "text-white",
+        "image": "/cards/claro.png",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "designedAt": "Try (WPP Group)",
+        "protected": true,
+        "iconColor": "#000",
+        "gallery": [
+            "/projects/claro/claro-1.png",
+            "/projects/claro/claro-2.png",
+            "/projects/claro/claro-3.png",
+            "/projects/claro/claro-4.png",
+            "/projects/claro/claro-5.png",
+            "/projects/claro/claro-6.png",
+            "/projects/claro/claro-7.png"
+        ]
     },
     {
         "id": "6",
