@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer utilities {
+
+  /* Custom utility for hiding scrollbar */
+  .no-scrollbar {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: url('/fonts/HelveticaNeueRegular.woff') format('woff'),
+    url('/fonts/HelveticaNeueRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: url('/fonts/HelveticaNeueLBold.woff') format('woff'),
+    url('/fonts/HelveticaNeueLBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: url('/fonts/HelveticaNeueMedium.woff') format('woff'),
+    url('/fonts/HelveticaNeueMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  /* Global line-height */
+}
+
+@layer utilities {
+  .custom-link {
+    @apply relative transition-opacity duration-300 hover:opacity-70;
+  }
+
+  .custom-link::after {
+    content: '';
+    @apply absolute left-0 right-0 bottom-[2px] h-[1px] opacity-25 transition-opacity duration-300;
+    background-color: currentColor;
+  }
+}

@@ -1,0 +1,213 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import PasswordGate from '../../components/PasswordGate';
+import { useRouter } from 'next/navigation';
+
+interface Project {
+    id: string;
+    title: string;
+    description?: string;
+    awards?: string;
+    designedAt?: string;
+    protected?: boolean;
+    gallery?: string[];
+    slug: string;
+}
+
+export default function ProjectDetailContent({ project }: { project: Project }) {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+
+        const timer = setTimeout(() => setIsLoaded(true), 100);
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                router.push('/');
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [router]);
+
+    const handleBack = (e: React.MouseEvent) => {
+        // Only navigate if we're not clicking a link or button
+        const target = e.target as HTMLElement;
+        if (target.closest('a, button')) {
+            return;
+        }
+        router.push('/');
+    };
+
+    const PageContent = (
+        <div
+            className={`flex flex-col md:flex-row ${isMobile ? 'min-h-[100dvh]' : 'min-h-screen'} bg-white dark:bg-zinc-900 text-black dark:text-white font-sans selection:bg-black selection:text-white relative`}
+            onClick={handleBack}
+            style={{
+                cursor: `url('/close.svg') 16 16, auto`,
+                overflowX: 'hidden'
+            }}
+        >
+            <style jsx global>{`
+                a, button, .cursor-pointer {
+                    cursor: pointer !important;
+                }
+            `}</style>
+            {/* Left Column - Fixed on desktop, scrollable on mobile */}
+            <div
+                className="md:fixed left-0 top-0 w-full md:w-1/4 md:h-screen p-10 md:p-[48px] flex flex-col md:justify-between z-10"
+            >
+                {/* Header - Top aligned on mobile */}
+                <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-1 text-[16px] md:text-sm">
+                        <Link href="/" className="custom-link font-normal">
+                            Projects
+                        </Link>
+                        <span>/</span>
+                        <span>{project.title}</span>
+                    </div>
+                </div>
+
+                {/* Content Footer / Description area - DESKTOP ONLY ANIMATION or STATIC ON MOBILE IF WE ANIMATE CONTAINER */}
+                {!isMobile && (
+                    <div
+                        className="hidden md:flex flex-col gap-8 transition-all"
+                        style={{
+                            transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                            opacity: isLoaded ? 1 : 0,
+                            transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                            transitionDuration: '600ms',
+                            transitionDelay: '500ms'
+                        }}
+                    >
+                        {/* Description */}
+                        <div className="max-w-md">
+                            <p className="leading-relaxed text-base text-black dark:text-white">
+                                {project.description || "Project description goes here."}
+                            </p>
+                        </div>
+
+                        {/* Metadata */}
+                        <div className="flex flex-col gap-1 text-[13px] text-black">
+                            {/* Awards */}
+                            {project.awards && (
+                                <div className="opacity-50">
+                                    <span>Awards: </span>
+                                    <span className="leading-relaxed">
+                                        {project.awards}
+                                    </span>
+                                </div>
+                            )}
+
+                            {/* Designed At */}
+                            {project.designedAt && (
+                                <div className="opacity-50">
+                                    <span>Designed at: </span>
+                                    <span>{project.designedAt}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Combined Content Container for Mobile Transition */}
+            <div
+                className="w-full flex flex-col md:flex-row"
+            >
+                {/* Mobile version of side content */}
+                {isMobile && (
+                    <div
+                        className="w-full p-10 flex flex-col gap-8 transition-all"
+                        style={{
+                            paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
+                            transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                            opacity: isLoaded ? 1 : 0,
+                            transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                            transitionDuration: '900ms'
+                        }}
+                    >
+                        {/* Description */}
+                        <div className="max-w-md">
+                            <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                {project.description || "Project description goes here."}
+                            </p>
+                        </div>
+
+                        {/* Metadata */}
+                        <div className="flex flex-col gap-1 text-[16px] text-black">
+                            {/* Awards */}
+                            {project.awards && (
+                                <div className="opacity-50">
+                                    <span>Awards: </span>
+                                    <span className="leading-relaxed">
+                                        {project.awards}
+                                    </span>
+                                </div>
+                            )}
+
+                            {/* Designed At */}
+                            {project.designedAt && (
+                                <div className="opacity-50">
+                                    <span>Designed at: </span>
+                                    <span>{project.designedAt}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* Right Column - Scrollable Gallery */}
+                <div
+                    className="md:ml-[25%] w-full md:w-3/4 p-[12px] md:p-[12px] transition-opacity mt-4 md:mt-0 pb-[12px]"
+                    style={{
+                        opacity: !isMobile && !isLoaded ? 0 : 1,
+                        transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                        transitionDuration: '600ms'
+                    }}
+                >
+                    <div className="flex flex-col gap-[12px]">
+                        {/* Placeholder Gallery if empty */}
+                        {(!project.gallery || project.gallery.length === 0) && (
+                            <>
+                                <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
+                                    Image 1
+                                </div>
+                                <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
+                                    Image 2
+                                </div>
+                                <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
+                                    Image 3
+                                </div>
+                            </>
+                        )}
+
+                        {project.gallery?.map((img, index) => (
+                            <div key={index} className="w-full aspect-[3/2] rounded-[8px] overflow-hidden relative">
+                                <img src={img} alt={`${project.title} gallery ${index + 1}`} className="w-full h-full object-cover" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+    if (project.protected) {
+        return <PasswordGate projectTitle={project.title}>{PageContent}</PasswordGate>;
+    }
+
+    return PageContent;
+}
