@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import PasswordGate from '../../components/PasswordGate';
 import { useRouter } from 'next/navigation';
 
@@ -196,7 +197,14 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
                         {project.gallery?.map((img, index) => (
                             <div key={index} className="w-full aspect-[3/2] rounded-[8px] overflow-hidden relative">
-                                <img src={img} alt={`${project.title} gallery ${index + 1}`} className="w-full h-full object-cover" />
+                                <Image
+                                    src={img}
+                                    alt={`${project.title} gallery ${index + 1}`}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, 75vw"
+                                    priority={index === 0}
+                                />
                             </div>
                         ))}
                     </div>

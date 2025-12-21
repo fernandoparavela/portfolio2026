@@ -1,5 +1,6 @@
 import { Project } from '../data/projects';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface CardProps {
     project: Project;
@@ -23,11 +24,17 @@ export default function Card({ project, rotation, index, isMobile, isLoaded = fa
                     '--hover-rotate': `${hoverRotate}deg`,
                     transform: isMobile ? 'none' : undefined, // Rotation moved to parent wrapper in Carousel.tsx to avoid conflict with hover:scale
                     backgroundColor: project.color.replace('bg-[', '').replace(']', ''), // Fallback
-                    backgroundImage: `url(${project.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
                 } as React.CSSProperties}
             >
+                <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 300px"
+                    priority={index < 4}
+                />
+
                 <div className="relative z-10 flex flex-col gap-[4px]">
                     <h3 className="text-3xl font-medium tracking-[-0.5px]">{project.title}</h3>
                     <p className="text-sm opacity-80 font-normal">{project.category}</p>
@@ -36,7 +43,7 @@ export default function Card({ project, rotation, index, isMobile, isLoaded = fa
                 {/* Lock icon */}
                 {project.protected && (
                     <div
-                        className="absolute top-6 right-6 z-10 w-6 h-6 opacity-60"
+                        className="absolute top-6 right-6 z-20 w-6 h-6 opacity-60"
                         style={{
                             backgroundColor: project.iconColor || 'currentColor',
                             maskImage: 'url(/lock.svg)',
