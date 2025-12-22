@@ -146,8 +146,8 @@
         "slug": "archive",
         "title": "Archive",
         "color": "bg-[#009966]",
-        "textColor": "text-white",
-        "image": "/cards/google-for-education.png",
+        "textColor": "text-black",
+        "image": "/cards/saint-paul.png",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "iconColor": "#fff",
         "gallery": [
