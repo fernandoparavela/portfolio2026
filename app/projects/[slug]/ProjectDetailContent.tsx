@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 interface Project {
     id: string;
     title: string;
-    description?: string;
+    description?: string | string[];
     awards?: string;
     designedAt?: string;
     protected?: boolean;
@@ -79,142 +79,145 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 </div>
             </div>
 
-            {/* Left Column Content - Relocated to scroll with page */}
-            {!isMobile && (
-                <div className="relative w-1/4 hidden md:flex flex-col min-h-screen">
-                    <div
-                        className="p-[48px] flex flex-col gap-8 transition-all"
-                        style={{
-                            marginTop: 'calc(100vh - (100vh / 1.618))',
-                            transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
-                            opacity: isLoaded ? 1 : 0,
-                            transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
-                            transitionDuration: '600ms',
-                            transitionDelay: '500ms'
-                        }}
-                    >
-                        {/* Description */}
-                        <div className="max-w-md flex flex-col gap-4">
-                            {Array.isArray(project.description) ? (
-                                (project.description as string[]).map((p, i) => (
-                                    <p key={i} className="leading-relaxed text-base text-black dark:text-white">
-                                        {p}
+            {/* Main Content Area */}
+            <div className="w-full flex flex-col md:flex-row">
+                {/* Desktop Left Column - Scrollable with golden-ratio offset */}
+                {!isMobile && (
+                    <div className="relative w-1/4 hidden md:flex flex-col min-h-screen">
+                        <div
+                            className="p-[48px] flex flex-col gap-8 transition-all"
+                            style={{
+                                marginTop: 'calc(100vh - (100vh / 1.618))',
+                                transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                                opacity: isLoaded ? 1 : 0,
+                                transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                                transitionDuration: '600ms',
+                                transitionDelay: '500ms'
+                            }}
+                        >
+                            {/* Description */}
+                            <div className="max-w-md flex flex-col gap-4">
+                                {Array.isArray(project.description) ? (
+                                    (project.description as string[]).map((p, i) => (
+                                        <p key={i} className="leading-relaxed text-base text-black dark:text-white">
+                                            {p}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="leading-relaxed text-base text-black dark:text-white">
+                                        {project.description || "Project description goes here."}
                                     </p>
-                                ))
-                            ) : (
-                                <p className="leading-relaxed text-base text-black dark:text-white">
-                                    {project.description || "Project description goes here."}
-                                </p>
-                            )}
-                        </div>
+                                )}
+                            </div>
 
-                        {/* Metadata */}
-                        <div className="flex flex-col gap-1 text-[13px] text-black">
-                            {/* Awards */}
-                            {project.awards && (
-                                <div className="opacity-50">
-                                    <span>Awards: </span>
-                                    <span className="leading-relaxed">
-                                        {project.awards}
-                                    </span>
-                                </div>
-                            )}
+                            {/* Metadata */}
+                            <div className="flex flex-col gap-1 text-[13px] text-black">
+                                {/* Awards */}
+                                {project.awards && (
+                                    <div className="opacity-50">
+                                        <span>Awards: </span>
+                                        <span className="leading-relaxed">
+                                            {project.awards}
+                                        </span>
+                                    </div>
+                                )}
 
-                            {/* Designed At */}
-                            {project.designedAt && (
-                                <div className="opacity-50">
-                                    <span>Designed at: </span>
-                                    <span>{project.designedAt}</span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Combined Content Container for Mobile Transition */}
-            <div
-                className="w-full flex flex-col md:flex-row"
-            >
-                {/* Mobile version of side content */}
-                {isMobile && (
-                    <div
-                        className="w-full p-10 flex flex-col gap-8 transition-all"
-                        style={{
-                            paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
-                            transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
-                            opacity: isLoaded ? 1 : 0,
-                            transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
-                            transitionDuration: '900ms'
-                        }}
-                    >
-                        {/* Description */}
-                        <div className="max-w-md">
-                            <p className="leading-relaxed text-[16px] text-black dark:text-white">
-                                {project.description || "Project description goes here."}
-                            </p>
-                        </div>
-
-                        {/* Metadata */}
-                        <div className="flex flex-col gap-1 text-[16px] text-black">
-                            {/* Awards */}
-                            {project.awards && (
-                                <div className="opacity-50">
-                                    <span>Awards: </span>
-                                    <span className="leading-relaxed">
-                                        {project.awards}
-                                    </span>
-                                </div>
-                            )}
-
-                            {/* Designed At */}
-                            {project.designedAt && (
-                                <div className="opacity-50">
-                                    <span>Designed at: </span>
-                                    <span>{project.designedAt}</span>
-                                </div>
-                            )}
+                                {/* Designed At */}
+                                {project.designedAt && (
+                                    <div className="opacity-50">
+                                        <span>Designed at: </span>
+                                        <span>{project.designedAt}</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
 
-                {/* Right Column - Scrollable Gallery */}
+                {/* Content Container (Mobile transition logic preserved) */}
                 <div
-                    className="md:ml-[25%] w-full md:w-3/4 p-[12px] md:p-[12px] transition-opacity mt-4 md:mt-0 pb-[12px]"
-                    style={{
-                        opacity: !isMobile && !isLoaded ? 0 : 1,
-                        transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
-                        transitionDuration: '600ms'
-                    }}
+                    className="w-full flex flex-col md:flex-row md:w-3/4"
                 >
-                    <div className="flex flex-col gap-[12px]">
-                        {/* Placeholder Gallery if empty */}
-                        {(!project.gallery || project.gallery.length === 0) && (
-                            <>
-                                <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
-                                    Image 1
-                                </div>
-                                <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
-                                    Image 2
-                                </div>
-                                <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
-                                    Image 3
-                                </div>
-                            </>
-                        )}
-
-                        {project.gallery?.map((img, index) => (
-                            <div key={index} className="w-full aspect-[3/2] rounded-[8px] overflow-hidden relative">
-                                <Image
-                                    src={img}
-                                    alt={`${project.title} gallery ${index + 1}`}
-                                    fill
-                                    className="object-cover"
-                                    sizes="(max-width: 768px) 100vw, 75vw"
-                                    priority={index === 0}
-                                />
+                    {/* Mobile version of side content */}
+                    {isMobile && (
+                        <div
+                            className="w-full p-10 flex flex-col gap-8 transition-all"
+                            style={{
+                                paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
+                                transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                                opacity: isLoaded ? 1 : 0,
+                                transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                                transitionDuration: '900ms'
+                            }}
+                        >
+                            {/* Description */}
+                            <div className="max-w-md">
+                                <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                    {project.description || "Project description goes here."}
+                                </p>
                             </div>
-                        ))}
+
+                            {/* Metadata */}
+                            <div className="flex flex-col gap-1 text-[16px] text-black">
+                                {/* Awards */}
+                                {project.awards && (
+                                    <div className="opacity-50">
+                                        <span>Awards: </span>
+                                        <span className="leading-relaxed">
+                                            {project.awards}
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* Designed At */}
+                                {project.designedAt && (
+                                    <div className="opacity-50">
+                                        <span>Designed at: </span>
+                                        <span>{project.designedAt}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Right Column - Scrollable Gallery */}
+                    <div
+                        className="w-full p-[12px] md:p-[12px] transition-opacity mt-4 md:mt-0 pb-[12px]"
+                        style={{
+                            opacity: !isMobile && !isLoaded ? 0 : 1,
+                            transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                            transitionDuration: '600ms'
+                        }}
+                    >
+                        <div className="flex flex-col gap-[12px]">
+                            {/* Placeholder Gallery if empty */}
+                            {(!project.gallery || project.gallery.length === 0) && (
+                                <>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
+                                        Image 1
+                                    </div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
+                                        Image 2
+                                    </div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
+                                        Image 3
+                                    </div>
+                                </>
+                            )}
+
+                            {project.gallery?.map((img, index) => (
+                                <div key={index} className="w-full aspect-[3/2] rounded-[8px] overflow-hidden relative">
+                                    <Image
+                                        src={img}
+                                        alt={`${project.title} gallery ${index + 1}`}
+                                        fill
+                                        className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, 75vw"
+                                        priority={index === 0}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
