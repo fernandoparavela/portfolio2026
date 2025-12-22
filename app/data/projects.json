@@ -18,7 +18,7 @@
             "/projects/itu/itu-4.png",
             "/projects/itu/itu-5.png",
             "/projects/itu/itu-6.png",
-            "/projects/itu/itu-7.jpg"
+            "/projects/itu/itu-7.png"
         ]
     },
     {
@@ -89,7 +89,11 @@
         "awards": "",
         "designedAt": "Accenture Song",
         "iconColor": "#fff",
-        "gallery": []
+        "gallery": [
+            "/projects/farm/farm-1.png",
+            "/projects/farm/farm-2.png",
+            "/projects/farm/farm-3.png"
+        ]
     },
     {
         "id": "5",
@@ -125,48 +129,42 @@
         "awards": "LAD Awards 2022",
         "designedAt": "Try (WPP Group)",
         "iconColor": "#fff",
-        "gallery": []
+        "gallery": [
+            "/projects/ideazarvos/ideazarvos-1.png",
+            "/projects/ideazarvos/ideazarvos-2.png",
+            "/projects/ideazarvos/ideazarvos-3.png",
+            "/projects/ideazarvos/ideazarvos-4.png",
+            "/projects/ideazarvos/ideazarvos-5.png",
+            "/projects/ideazarvos/ideazarvos-6.png",
+            "/projects/ideazarvos/ideazarvos-7.png",
+            "/projects/ideazarvos/ideazarvos-8.png",
+            "/projects/ideazarvos/ideazarvos-9.png"
+        ]
     },
     {
         "id": "7",
-        "slug": "google-for-education",
-        "title": "Google for Education",
-        "category": "Branding",
-        "color": "bg-[#e6d0d0]",
-        "textColor": "text-black",
-        "image": "/cards/google-for-education.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "D&AD 2021",
-        "designedAt": "Try (WPP Group)",
-        "iconColor": "#000",
-        "gallery": []
-    },
-    {
-        "id": "8",
-        "slug": "tok-stok",
-        "title": "Tok&Stok",
-        "category": "E-commerce",
+        "slug": "archive",
+        "title": "Archive",
         "color": "bg-[#009966]",
         "textColor": "text-white",
-        "image": "/cards/tokstok.png",
+        "image": "/cards/google-for-education.png",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "Effie Awards 2020",
-        "designedAt": "Try (WPP Group)",
         "iconColor": "#fff",
-        "gallery": []
-    },
-    {
-        "id": "9",
-        "slug": "saint-paul",
-        "title": "Saint Paul",
-        "category": "Education platform",
-        "color": "bg-[#f4f4f4]",
-        "textColor": "text-black",
-        "image": "/cards/saint-paul.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "BDA 2020",
-        "designedAt": "Try (WPP Group)",
-        "iconColor": "#000",
-        "gallery": []
+        "gallery": [
+            "/projects/learningbook/archive-1.png",
+            "/projects/learningbook/archive-2.png",
+            "/projects/learningbook/archive-3.png",
+            "/projects/learningbook/archive-4.png",
+            "/projects/learningbook/archive-5.png",
+            "/projects/learningbook/archive-6.png",
+            "/projects/learningbook/archive-7.png",
+            "/projects/learningbook/archive-8.png",
+            "/projects/learningbook/archive-9.png",
+            "/projects/learningbook/archive-10.png",
+            "/projects/learningbook/archive-11.png",
+            "/projects/learningbook/archive-12.png",
+            "/projects/learningbook/archive-13.png",
+            "/projects/learningbook/archive-14.png"
+        ]
     }
 ]
