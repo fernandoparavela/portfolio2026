@@ -151,20 +151,20 @@
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "iconColor": "#fff",
         "gallery": [
-            "/projects/learningbook/archive-1.png",
-            "/projects/learningbook/archive-2.png",
-            "/projects/learningbook/archive-3.png",
-            "/projects/learningbook/archive-4.png",
-            "/projects/learningbook/archive-5.png",
-            "/projects/learningbook/archive-6.png",
-            "/projects/learningbook/archive-7.png",
-            "/projects/learningbook/archive-8.png",
-            "/projects/learningbook/archive-9.png",
-            "/projects/learningbook/archive-10.png",
-            "/projects/learningbook/archive-11.png",
-            "/projects/learningbook/archive-12.png",
-            "/projects/learningbook/archive-13.png",
-            "/projects/learningbook/archive-14.png"
+            "/projects/archive/archive-1.png",
+            "/projects/archive/archive-2.png",
+            "/projects/archive/archive-3.png",
+            "/projects/archive/archive-4.png",
+            "/projects/archive/archive-5.png",
+            "/projects/archive/archive-6.png",
+            "/projects/archive/archive-7.png",
+            "/projects/archive/archive-8.png",
+            "/projects/archive/archive-9.png",
+            "/projects/archive/archive-10.png",
+            "/projects/archive/archive-11.png",
+            "/projects/archive/archive-12.png",
+            "/projects/archive/archive-13.png",
+            "/projects/archive/archive-14.png"
         ]
     }
 ]
