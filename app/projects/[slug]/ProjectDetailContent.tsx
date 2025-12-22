@@ -58,7 +58,6 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             onClick={handleBack}
             style={{
                 cursor: `url('/close.svg') 16 16, auto`,
-                overflowX: 'hidden'
             }}
         >
             <style jsx global>{`
@@ -80,12 +79,12 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             </div>
 
             {/* Main Content Area */}
-            <div className="w-full flex flex-col md:flex-row">
+            <div className="w-full flex flex-col md:flex-row md:items-stretch">
                 {/* Desktop Left Column - Scrollable with golden-ratio offset and sticky anchoring */}
                 {!isMobile && (
                     <div className="relative w-1/4 hidden md:flex flex-col">
                         <div
-                            className="p-[48px] flex flex-col gap-[1em] transition-all md:sticky md:bottom-[48px]"
+                            className="p-[48px] flex flex-col gap-[1em] transition-all md:sticky md:top-[100px]"
                             style={{
                                 marginTop: 'calc(100vh - (100vh / 1.618))',
                                 transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
