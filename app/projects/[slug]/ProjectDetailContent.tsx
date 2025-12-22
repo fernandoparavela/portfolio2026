@@ -81,11 +81,11 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
             {/* Main Content Area */}
             <div className="w-full flex flex-col md:flex-row">
-                {/* Desktop Left Column - Scrollable with golden-ratio offset */}
+                {/* Desktop Left Column - Scrollable with golden-ratio offset and sticky anchoring */}
                 {!isMobile && (
-                    <div className="relative w-1/4 hidden md:flex flex-col min-h-screen">
+                    <div className="relative w-1/4 hidden md:flex flex-col">
                         <div
-                            className="p-[48px] flex flex-col gap-8 transition-all"
+                            className="p-[48px] flex flex-col gap-[1em] transition-all md:sticky md:bottom-[48px] md:self-end"
                             style={{
                                 marginTop: 'calc(100vh - (100vh / 1.618))',
                                 transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
@@ -96,7 +96,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                             }}
                         >
                             {/* Description */}
-                            <div className="max-w-md flex flex-col gap-4">
+                            <div className="max-w-md flex flex-col gap-[1em]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
                                         <p key={i} className="leading-relaxed text-base text-black dark:text-white">
@@ -141,7 +141,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                     {/* Mobile version of side content */}
                     {isMobile && (
                         <div
-                            className="w-full p-10 flex flex-col gap-8 transition-all"
+                            className="w-full p-10 flex flex-col gap-[1em] transition-all"
                             style={{
                                 paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
                                 transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
@@ -151,7 +151,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                             }}
                         >
                             {/* Description */}
-                            <div className="max-w-md">
+                            <div className="max-w-md flex flex-col gap-[1em]">
                                 <p className="leading-relaxed text-[16px] text-black dark:text-white">
                                     {project.description || "Project description goes here."}
                                 </p>
