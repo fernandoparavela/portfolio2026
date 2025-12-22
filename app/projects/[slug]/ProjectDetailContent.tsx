@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 interface Project {
     id: string;
     title: string;
-    description?: string;
+    description?: string | string[];
     awards?: string;
     designedAt?: string;
     protected?: boolean;
@@ -20,12 +20,28 @@ interface Project {
 export default function ProjectDetailContent({ project }: { project: Project }) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [headerOpacity, setHeaderOpacity] = useState(1);
     const router = useRouter();
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768);
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener('resize', handleResize);
+
+        const handleScroll = () => {
+            const descElement = document.getElementById('project-description');
+            if (descElement) {
+                const rect = descElement.getBoundingClientRect();
+                // Fade out header when description reaches 100px from top
+                if (rect.top <= 100) {
+                    setHeaderOpacity(0);
+                } else {
+                    setHeaderOpacity(1);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
 
         const timer = setTimeout(() => setIsLoaded(true), 100);
 
@@ -40,6 +56,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             clearTimeout(timer);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, [router]);
 
@@ -66,26 +83,30 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                     cursor: pointer !important;
                 }
             `}</style>
-            {/* Left Column - Fixed on desktop, scrollable on mobile */}
+            {/* Fixed Header - Desktop & Mobile */}
             <div
-                className="md:fixed left-0 top-0 w-full md:w-1/4 md:h-screen p-10 md:p-[48px] flex flex-col md:justify-between z-10"
+                className="fixed left-0 top-0 w-full md:w-1/4 p-10 md:p-[48px] z-30 transition-opacity duration-300"
+                style={{ opacity: headerOpacity }}
             >
-                {/* Header - Top aligned on mobile */}
                 <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1 text-[16px] md:text-sm">
                         <Link href="/" className="custom-link font-normal">
                             Projects
                         </Link>
                         <span>/</span>
-                        <span>{project.title}</span>
+                        <span className="truncate">{project.title}</span>
                     </div>
                 </div>
+            </div>
 
-                {/* Content Footer / Description area - DESKTOP ONLY ANIMATION or STATIC ON MOBILE IF WE ANIMATE CONTAINER */}
-                {!isMobile && (
+            {/* Left Column Content - Desktop scrolls naturally and anchors */}
+            {!isMobile && (
+                <div className="relative w-1/4 hidden md:flex flex-col min-h-screen">
                     <div
-                        className="hidden md:flex flex-col gap-8 transition-all"
+                        id="project-description"
+                        className="sticky bottom-[48px] self-end p-[48px] flex flex-col gap-8 transition-all"
                         style={{
+                            marginTop: 'calc(100vh - (100vh / 1.618))',
                             transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
                             opacity: isLoaded ? 1 : 0,
                             transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
@@ -94,10 +115,18 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                         }}
                     >
                         {/* Description */}
-                        <div className="max-w-md">
-                            <p className="leading-relaxed text-base text-black dark:text-white">
-                                {project.description || "Project description goes here."}
-                            </p>
+                        <div className="max-w-md flex flex-col gap-4">
+                            {Array.isArray(project.description) ? (
+                                project.description.map((p, i) => (
+                                    <p key={i} className="leading-relaxed text-base text-black dark:text-white">
+                                        {p}
+                                    </p>
+                                ))
+                            ) : (
+                                <p className="leading-relaxed text-base text-black dark:text-white">
+                                    {project.description || "Project description goes here."}
+                                </p>
+                            )}
                         </div>
 
                         {/* Metadata */}
@@ -121,8 +150,8 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                             )}
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             {/* Combined Content Container for Mobile Transition */}
             <div
@@ -131,6 +160,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 {/* Mobile version of side content */}
                 {isMobile && (
                     <div
+                        id="project-description"
                         className="w-full p-10 flex flex-col gap-8 transition-all"
                         style={{
                             paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
@@ -141,10 +171,18 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                         }}
                     >
                         {/* Description */}
-                        <div className="max-w-md">
-                            <p className="leading-relaxed text-[16px] text-black dark:text-white">
-                                {project.description || "Project description goes here."}
-                            </p>
+                        <div className="max-w-md flex flex-col gap-4">
+                            {Array.isArray(project.description) ? (
+                                project.description.map((p, i) => (
+                                    <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">
+                                        {p}
+                                    </p>
+                                ))
+                            ) : (
+                                <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                    {project.description || "Project description goes here."}
+                                </p>
+                            )}
                         </div>
 
                         {/* Metadata */}
