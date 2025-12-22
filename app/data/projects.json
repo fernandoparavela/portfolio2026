@@ -145,6 +145,7 @@
         "id": "7",
         "slug": "archive",
         "title": "Archive",
+        "category": "2004—2026",
         "color": "bg-[#009966]",
         "textColor": "text-black",
         "image": "/cards/saint-paul.png",
