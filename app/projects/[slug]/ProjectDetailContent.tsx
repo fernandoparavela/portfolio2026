@@ -85,7 +85,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 {!isMobile && (
                     <div className="relative w-1/4 hidden md:flex flex-col">
                         <div
-                            className="p-[48px] flex flex-col gap-[1em] transition-all md:sticky md:bottom-[48px] md:self-end"
+                            className="p-[48px] flex flex-col gap-[1em] transition-all md:sticky md:bottom-[48px]"
                             style={{
                                 marginTop: 'calc(100vh - (100vh / 1.618))',
                                 transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
