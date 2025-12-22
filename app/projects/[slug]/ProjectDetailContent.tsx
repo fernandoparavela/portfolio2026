@@ -152,9 +152,17 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                         >
                             {/* Description */}
                             <div className="max-w-md flex flex-col gap-[1em]">
-                                <p className="leading-relaxed text-[16px] text-black dark:text-white">
-                                    {project.description || "Project description goes here."}
-                                </p>
+                                {Array.isArray(project.description) ? (
+                                    (project.description as string[]).map((p, i) => (
+                                        <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">
+                                            {p}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                        {project.description || "Project description goes here."}
+                                    </p>
+                                )}
                             </div>
 
                             {/* Metadata */}
