@@ -79,46 +79,6 @@
     },
     {
         "id": "4",
-        "slug": "farm-rio",
-        "title": "Farm Rio",
-        "category": "E-commerce",
-        "color": "bg-[#001a4d]",
-        "textColor": "text-white",
-        "image": "/cards/farm-rio.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "",
-        "designedAt": "Accenture Song",
-        "iconColor": "#fff",
-        "gallery": [
-            "/projects/farm/farm-1.png",
-            "/projects/farm/farm-2.png",
-            "/projects/farm/farm-3.png"
-        ]
-    },
-    {
-        "id": "5",
-        "slug": "claro-flex",
-        "title": "Claro Flex",
-        "category": "Telecom app",
-        "color": "bg-[#ff3b30]",
-        "textColor": "text-white",
-        "image": "/cards/claro.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "designedAt": "Try (WPP Group)",
-        "protected": true,
-        "iconColor": "#000",
-        "gallery": [
-            "/projects/claro/claro-1.png",
-            "/projects/claro/claro-2.png",
-            "/projects/claro/claro-3.png",
-            "/projects/claro/claro-4.png",
-            "/projects/claro/claro-5.png",
-            "/projects/claro/claro-6.png",
-            "/projects/claro/claro-7.png"
-        ]
-    },
-    {
-        "id": "6",
         "slug": "idea-zarvos",
         "title": "Idea Zarvos",
         "category": "Architecture website",
@@ -139,6 +99,46 @@
             "/projects/ideazarvos/ideazarvos-7.png",
             "/projects/ideazarvos/ideazarvos-8.png",
             "/projects/ideazarvos/ideazarvos-9.png"
+        ]
+    },
+    {
+        "id": "5",
+        "slug": "farm-rio",
+        "title": "Farm Rio",
+        "category": "E-commerce",
+        "color": "bg-[#001a4d]",
+        "textColor": "text-white",
+        "image": "/cards/farm-rio.png",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "awards": "",
+        "designedAt": "Accenture Song",
+        "iconColor": "#fff",
+        "gallery": [
+            "/projects/farm/farm-1.png",
+            "/projects/farm/farm-2.png",
+            "/projects/farm/farm-3.png"
+        ]
+    },
+    {
+        "id": "6",
+        "slug": "claro-flex",
+        "title": "Claro Flex",
+        "category": "Telecom app",
+        "color": "bg-[#ff3b30]",
+        "textColor": "text-white",
+        "image": "/cards/claro.png",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "designedAt": "Try (WPP Group)",
+        "protected": true,
+        "iconColor": "#000",
+        "gallery": [
+            "/projects/claro/claro-1.png",
+            "/projects/claro/claro-2.png",
+            "/projects/claro/claro-3.png",
+            "/projects/claro/claro-4.png",
+            "/projects/claro/claro-5.png",
+            "/projects/claro/claro-6.png",
+            "/projects/claro/claro-7.png"
         ]
     },
     {
