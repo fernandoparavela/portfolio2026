@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import PasswordGate from '../../components/PasswordGate';
@@ -20,6 +20,9 @@ interface Project {
 export default function ProjectDetailContent({ project }: { project: Project }) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [sidebarStyle, setSidebarStyle] = useState<React.CSSProperties>({});
+    const sidebarRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -28,6 +31,48 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         window.addEventListener('resize', handleResize);
 
         const timer = setTimeout(() => setIsLoaded(true), 100);
+
+        const handleScroll = () => {
+            if (window.innerWidth < 768 || !sidebarRef.current || !containerRef.current) {
+                setSidebarStyle({});
+                return;
+            }
+
+            const vh = window.innerHeight;
+            const goldenRatio = vh - (vh / 1.618);
+            const contentHeight = sidebarRef.current.offsetHeight;
+            const containerRect = containerRef.current.getBoundingClientRect();
+
+            // The point where the bottom of the content hits vh - 48px
+            const bottomThreshold = vh - 48;
+
+            // Natural position based on Golden Ratio margin
+            const naturalTop = containerRect.top + goldenRatio;
+            const naturalBottom = naturalTop + contentHeight;
+
+            if (naturalBottom > bottomThreshold) {
+                // Pin to bottom-48
+                setSidebarStyle({
+                    position: 'fixed',
+                    bottom: '48px',
+                    width: '25%', // Maintain 1/4 width
+                    padding: '48px',
+                    top: 'auto'
+                });
+            } else {
+                // Stay at Golden Ratio
+                setSidebarStyle({
+                    position: 'absolute',
+                    top: `${goldenRatio}px`,
+                    width: '100%',
+                    padding: '48px'
+                });
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        handleScroll(); // Initial check
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -40,8 +85,10 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             clearTimeout(timer);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
         };
-    }, [router]);
+    }, [router, isLoaded]);
 
     const handleBack = (e: React.MouseEvent) => {
         // Only navigate if we're not clicking a link or button
@@ -79,19 +126,18 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             </div>
 
             {/* Main Content Area */}
-            <div className="w-full flex flex-col md:flex-row md:items-stretch">
+            <div className="w-full flex flex-col md:flex-row md:items-stretch" ref={containerRef}>
                 {/* Desktop Left Column - Scrollable with golden-ratio offset and sticky anchoring */}
                 {!isMobile && (
                     <div className="relative w-1/4 hidden md:flex flex-col">
                         <div
-                            className="p-[48px] flex flex-col gap-[1em] transition-all md:sticky md:top-[100px]"
+                            ref={sidebarRef}
+                            className="flex flex-col gap-[1em] transition-opacity"
                             style={{
-                                marginTop: 'calc(100vh - (100vh / 1.618))',
-                                transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                                ...sidebarStyle,
                                 opacity: isLoaded ? 1 : 0,
                                 transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
                                 transitionDuration: '600ms',
-                                transitionDelay: '500ms'
                             }}
                         >
                             {/* Description */}
