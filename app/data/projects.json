@@ -34,8 +34,8 @@
         "image": "/cards/deutsche-telekom.png",
         "description": [
             "In 2023, Deutsche Telekom partnered with Work & Co to redefine its digital experience and brand expression. As part of this program, one initiative focused on reimagining the future of TV and shaping Deutsche Telekom’s strategic direction in the segment.",
-            "The work resulted in nearly 50 concepts outlining a vision for a hyper-personalized, context-aware, multi-channel TV experience powered by AI. Several concepts addressed the declining relevance of traditional live TV by enhancing on-demand viewing through smarter content curation and adaptation to individual viewing behaviors—such as breaking movies into shorter episodes or assembling personalized on-demand schedules from live content.",
-            "At the same time, the concepts strengthened live experiences where they still matter most, with sports as a key focus. Ideas included personalized sports timelines, enhanced key moments, and live social interaction layers. Together, concepts around personalization, intent recognition, and second-screen interaction connected live and on-demand viewing, outlining a near future where TV is intelligent, adaptive, and deeply personal."
+            "The work resulted in nearly 50 concepts outlining a vision for a hyper-personalized and context-aware TV experience powered by AI. Several concepts addressed the declining relevance of traditional live TV by enhancing on-demand viewing through smarter content curation and adaptation to individual viewing behaviors—such as breaking movies into shorter episodes or assembling personalized on-demand schedules from live content.",
+            "At the same time, the concepts strengthened live experiences where they still matter most, with sports as a key focus. Ideas included personalized sports timelines and live social interaction layers. Together, concepts around personalization, intent recognition, and second-screen interaction connected live and on-demand viewing, outlining a future where TV is intelligent, adaptive, and deeply personal."
         ],
         "designedAt": "Work & Co",
         "protected": true,
@@ -119,8 +119,11 @@
         "color": "bg-[#001a4d]",
         "textColor": "text-white",
         "image": "/cards/farm-rio.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "",
+        "description": [
+            "Farm Rio is one of Brazil’s most beloved fashion brands, known for translating elements of Brazilian culture into bold, expressive prints. The goal of this project was to elevate the brand’s expression in its e-commerce experience, ensuring that the digital channel reflected the same energy and identity found in its products, while supporting a frictionless shopping journey that drives conversion.",
+            "The solution was a simple, minimalist e-commerce structure designed to place the prints at the center of the experience. By avoiding a rigid or overly opinionated interface language, the platform created space for the brand to adapt its expression to each collection, allowing seasonality and visual storytelling to lead the experience.",
+            "Video played a central role in bringing the brand to life online. Rich motion content conveyed the vibrancy of the brand while supporting product understanding—such as fabric texture and fit—as well as comparison and decision-making, key factors for engagement and conversion. On mobile, videos were introduced at key moments of the journey to balance brand storytelling with performance, supporting faster decisions and higher confidence during checkout."
+        ],
         "designedAt": "Accenture Song",
         "iconColor": "#fff",
         "gallery": [

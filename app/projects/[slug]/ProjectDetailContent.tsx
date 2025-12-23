@@ -60,7 +60,15 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             }
 
             if (window.innerWidth < 768 || !sidebarRef.current || !containerRef.current) {
-                setSidebarStyle({});
+                // If refs aren't ready yet, we still want a reasonable starting position
+                const vh = window.innerHeight;
+                const goldenRatio = vh - (vh / 1.618);
+                setSidebarStyle({
+                    position: 'absolute',
+                    top: `${goldenRatio}px`,
+                    width: '100%',
+                    padding: '48px'
+                });
                 return;
             }
 
@@ -110,6 +118,17 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleScroll);
+
+        // Use ResizeObserver to handle cases where height changes dynamically 
+        // (e.g. Password entry or images loading)
+        const resizeObserver = new ResizeObserver(() => {
+            handleScroll();
+        });
+
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
         handleScroll();
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -119,6 +138,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             clearTimeout(timer);
+            resizeObserver.disconnect();
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('scroll', handleScroll);
