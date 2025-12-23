@@ -23,6 +23,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
     const [sidebarStyle, setSidebarStyle] = useState<React.CSSProperties>({});
     const sidebarRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -33,6 +34,33 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         const timer = setTimeout(() => setIsLoaded(true), 100);
 
         const handleScroll = () => {
+            // Header Fade Logic (Overlap Dependent)
+            if (headerRef.current && containerRef.current) {
+                const vh = window.innerHeight;
+                const containerRect = containerRef.current.getBoundingClientRect();
+                const headerRect = headerRef.current.getBoundingClientRect();
+                const headerBottom = headerRect.bottom;
+
+                let descriptionTop = 0;
+                if (window.innerWidth < 768) {
+                    const mobileOffset = vh - (vh / 1.618) - 100;
+                    descriptionTop = containerRect.top + mobileOffset;
+                } else {
+                    const goldenRatio = vh - (vh / 1.618);
+                    // On desktop, the sidebar has padding: 48px, so text starts 48px down
+                    descriptionTop = containerRect.top + goldenRatio + 48;
+                }
+
+                // Fade out ONLY during overlap
+                // Start fading at headerBottom, fully gone at headerBottom - 40px
+                const fadeRange = 40;
+                let opacity = 1;
+                if (descriptionTop < headerBottom) {
+                    opacity = Math.max(0, (descriptionTop - (headerBottom - fadeRange)) / fadeRange);
+                }
+                headerRef.current.style.opacity = opacity.toString();
+            }
+
             if (window.innerWidth < 768 || !sidebarRef.current || !containerRef.current) {
                 setSidebarStyle({});
                 return;
@@ -117,7 +145,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             `}</style>
 
             <div className="fixed left-0 top-0 w-full md:w-1/4 p-10 md:p-[48px] z-30 pointer-events-none">
-                <div className="flex flex-col gap-1 pointer-events-auto">
+                <div ref={headerRef} className="flex flex-col gap-1 pointer-events-auto transition-opacity duration-300">
                     <div className="flex items-center gap-1 text-[16px] md:text-sm">
                         <Link href="/" className="custom-link font-normal">Projects</Link>
                         <span>/</span>
@@ -159,7 +187,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                 )}
                                 {project.designedAt && (
                                     <div className="opacity-50">
-                                        <span>Designed at: </span>
+                                        <span>Designed at </span>
                                         <span>{project.designedAt}</span>
                                     </div>
                                 )}
@@ -200,7 +228,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                 )}
                                 {project.designedAt && (
                                     <div className="opacity-50">
-                                        <span>Designed at: </span>
+                                        <span>Designed at </span>
                                         <span>{project.designedAt}</span>
                                     </div>
                                 )}

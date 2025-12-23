@@ -8,7 +8,7 @@
         "textColor": "text-black",
         "image": "/cards/itu.png",
         "description": [
-            "In 2023, Itaú—the largest bank in Latin America—launched Itu, its first fully digital B2C product in Chile. The product was built on a clear differentiation strategy grounded in three simple pillars, deeply connected to insights from research with Chilean consumers: everyday simplicity, transparency that builds trust, and education that empowers financial autonomy.",
+            "In 2022, Itaú—the largest bank in Latin America—launched Itu, its first fully digital B2C product in Chile. The product was built on a clear differentiation strategy grounded in three simple pillars, deeply connected to insights from research with Chilean consumers: everyday simplicity, transparency that builds trust, and education that empowers financial autonomy.",
             "A key part of this strategy is Chanchitus—digital money spaces that allow customers to separate and organize funds for different goals. More than following a trend among digital banks, Chanchitus respond to a common local behavior of using multiple banks to segment money, enabling customers to manage their finances within a single app while maintaining a unified financial view."
         ],
         "awards": "IF Design Award 2025, Red Dot Awards 2024, Indigo Design Awards 2025, Webby Awards 2025, W3 Awards 2024, LAD Awards 2024",
@@ -66,11 +66,10 @@
         "textColor": "text-black",
         "image": "/cards/vivo.png",
         "description": [
-            "In 2022, Vivo—part of the Telefónica group and the largest telecommunications company in Brazil—started a repositioning to move beyond a traditional telecom model and expand into technology solutions. As part of this shift, Vivo entered the smart home category, offering residential automation services.",
-            "In Brazil, the main challenge for smart home adoption is not price, but complexity. Customers struggle to understand the value of a connected home, choose the right setup, and handle installation and configuration. Vivo’s key advantage is its nationwide workforce, trained to provide in-home consulting and installation. To reduce friction, the Vivo Casa Inteligente app was designed as a simple control layer, validated through usability testing with Vivo’s target audience, and tailored to be more accessible for this segment than tools such as Google Home, Amazon Alexa, or Smart Life. The app combines device control, integrated support, and lightweight educational content.",
+            "In 2022, Vivo—part of the Telefónica group and the largest telecommunications company in Brazil—began repositioning to expand beyond traditional telecom services into technology solutions, including smart home and residential automation.",
+            "In Brazil, smart home solutions remain a niche category, and adoption is mainly limited by perceived complexity among mass-market customers, rather than price. To address this, Vivo leveraged its nationwide workforce to offer in-home consulting and installation. Reducing friction not only in adoption but also in daily use, the Vivo Casa Inteligente app was designed as a simple control layer, validated through usability testing with Vivo’s target audience, and tailored to be more accessible for this segment than tools such as Google Home, Amazon Alexa, or Smart Life. The app combines device control, integrated support, and lightweight educational content.",
             "To build awareness at scale, an educational experience was also added to Vivo’s main app. It explains the smart home offering and allows customers to explore it through a guided virtual tour, helping a broad audience understand the value of connected-home solutions before adoption."
         ],
-        "awards": "BDA 2023",
         "designedAt": "Work & Co",
         "iconColor": "#000",
         "gallery": [
