@@ -32,7 +32,11 @@
         "color": "bg-[#ffcc99]",
         "textColor": "text-black",
         "image": "/cards/deutsche-telekom.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "description": [
+            "In 2023, Deutsche Telekom partnered with Work & Co to redefine its digital experience and brand expression. As part of this program, one initiative focused on reimagining the future of TV and shaping Deutsche Telekom’s strategic direction in the segment.",
+            "The work resulted in nearly 50 concepts outlining a vision for a hyper-personalized, context-aware, multi-channel TV experience powered by AI. Several concepts addressed the declining relevance of traditional live TV by enhancing on-demand viewing through smarter content curation and adaptation to individual viewing behaviors—such as breaking movies into shorter episodes or assembling personalized on-demand schedules from live content.",
+            "At the same time, the concepts strengthened live experiences where they still matter most, with sports as a key focus. Ideas included personalized sports timelines, enhanced key moments, and live social interaction layers. Together, concepts around personalization, intent recognition, and second-screen interaction connected live and on-demand viewing, outlining a near future where TV is intelligent, adaptive, and deeply personal."
+        ],
         "designedAt": "Work & Co",
         "protected": true,
         "iconColor": "#000",

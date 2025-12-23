@@ -22,6 +22,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
     const [isMobile, setIsMobile] = useState(false);
     const [sidebarStyle, setSidebarStyle] = useState<React.CSSProperties>({});
     const sidebarRef = useRef<HTMLDivElement>(null);
+    const mobileSidebarRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -35,30 +36,27 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
         const handleScroll = () => {
             // Header Fade Logic (Overlap Dependent)
-            if (headerRef.current && containerRef.current) {
-                const vh = window.innerHeight;
-                const containerRect = containerRef.current.getBoundingClientRect();
+            if (headerRef.current) {
                 const headerRect = headerRef.current.getBoundingClientRect();
                 const headerBottom = headerRect.bottom;
 
-                let descriptionTop = 0;
-                if (window.innerWidth < 768) {
-                    const mobileOffset = vh - (vh / 1.618) - 100;
-                    descriptionTop = containerRect.top + mobileOffset;
-                } else {
-                    const goldenRatio = vh - (vh / 1.618);
-                    // On desktop, the sidebar has padding: 48px, so text starts 48px down
-                    descriptionTop = containerRect.top + goldenRatio + 48;
-                }
+                // Use the relevant sidebar ref based on current view
+                const activeSidebar = window.innerWidth < 768 ? mobileSidebarRef.current : sidebarRef.current;
 
-                // Fade out ONLY during overlap
-                // Start fading at headerBottom, fully gone at headerBottom - 40px
-                const fadeRange = 40;
-                let opacity = 1;
-                if (descriptionTop < headerBottom) {
-                    opacity = Math.max(0, (descriptionTop - (headerBottom - fadeRange)) / fadeRange);
+                if (activeSidebar) {
+                    const sidebarRect = activeSidebar.getBoundingClientRect();
+                    const sidebarTop = sidebarRect.top;
+
+                    // Fade out ONLY during physical overlap
+                    // Start fading exactly when sidebarTop <= headerBottom
+                    const fadeRange = 40;
+                    let opacity = 1;
+
+                    if (sidebarTop < headerBottom) {
+                        opacity = Math.max(0, (sidebarTop - (headerBottom - fadeRange)) / fadeRange);
+                    }
+                    headerRef.current.style.opacity = opacity.toString();
                 }
-                headerRef.current.style.opacity = opacity.toString();
             }
 
             if (window.innerWidth < 768 || !sidebarRef.current || !containerRef.current) {
@@ -199,6 +197,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 <div className="w-full flex flex-col md:flex-row md:w-3/4">
                     {isMobile && (
                         <div
+                            ref={mobileSidebarRef}
                             className="w-full p-10 flex flex-col gap-[1em] transition-all"
                             style={{
                                 paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
