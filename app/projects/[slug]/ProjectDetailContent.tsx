@@ -39,27 +39,40 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             }
 
             const vh = window.innerHeight;
+            const containerRect = containerRef.current.getBoundingClientRect();
+            const galleryHeight = containerRect.height;
+
+            // "Short" project: total content matches or is less than viewport height
+            // simply position at the bottom edge for these cases
+            if (galleryHeight <= vh + 10) {
+                setSidebarStyle({
+                    position: 'absolute',
+                    bottom: '0px',
+                    width: '100%',
+                    padding: '48px',
+                    top: 'auto'
+                });
+                return;
+            }
+
+            // "Long" project: Needs editorial Golden Ratio start and bottom stickiness
             const goldenRatio = vh - (vh / 1.618);
             const contentHeight = sidebarRef.current.offsetHeight;
-            const containerRect = containerRef.current.getBoundingClientRect();
+            const anchorBottom = vh;
 
-            // We want the bottom of the content to be at least 48px from the bottom.
-            const targetBottomPos = vh - 48;
+            // Natural position of the content bottom as it scrolls
+            const naturalTop = containerRect.top + goldenRatio;
+            const naturalBottom = naturalTop + contentHeight;
 
-            // Current bottom position if it were scrolling naturally with the container
-            const initialBottom = containerRect.top + goldenRatio + contentHeight;
-
-            if (initialBottom <= targetBottomPos) {
-                // Pin to bottom-48 using fixed positioning
+            if (naturalBottom <= anchorBottom) {
                 setSidebarStyle({
                     position: 'fixed',
-                    bottom: '48px',
-                    width: '25%',
+                    bottom: '0px',
+                    width: '25%', // Keep sidebar width consistent
                     padding: '48px',
                     top: 'auto'
                 });
             } else {
-                // Return to absolute position relative to the track
                 setSidebarStyle({
                     position: 'absolute',
                     top: `${goldenRatio}px`,
@@ -69,14 +82,12 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleScroll);
         handleScroll();
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                router.push('/');
-            }
+            if (e.key === 'Escape') router.push('/');
         };
 
         window.addEventListener('keydown', handleKeyDown);
@@ -115,9 +126,9 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 </div>
             </div>
 
-            <div className="w-full flex flex-col md:flex-row md:items-stretch" ref={containerRef}>
+            <div className="w-full flex flex-col md:flex-row md:items-stretch flex-grow" ref={containerRef}>
                 {!isMobile && (
-                    <div className="relative w-1/4 hidden md:flex flex-col">
+                    <div className="relative w-1/4 hidden md:flex flex-col h-full">
                         <div
                             ref={sidebarRef}
                             className="flex flex-col gap-[1em] transition-opacity"

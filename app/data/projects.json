@@ -65,7 +65,11 @@
         "color": "bg-[#f4f4f4]",
         "textColor": "text-black",
         "image": "/cards/vivo.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "description": [
+            "In 2022, Vivo—part of the Telefónica group and the largest telecommunications company in Brazil—started a repositioning to move beyond a traditional telecom model and expand into technology solutions. As part of this shift, Vivo entered the smart home category, offering residential automation services.",
+            "In Brazil, the main challenge for smart home adoption is not price, but complexity. Customers struggle to understand the value of a connected home, choose the right setup, and handle installation and configuration. Vivo’s key advantage is its nationwide workforce, trained to provide in-home consulting and installation. To reduce friction, the Vivo Casa Inteligente app was designed as a simple control layer, validated through usability testing with Vivo’s target audience, and tailored to be more accessible for this segment than tools such as Google Home, Amazon Alexa, or Smart Life. The app combines device control, integrated support, and lightweight educational content.",
+            "To build awareness at scale, an educational experience was also added to Vivo’s main app. It explains the smart home offering and allows customers to explore it through a guided virtual tour, helping a broad audience understand the value of connected-home solutions before adoption."
+        ],
         "awards": "BDA 2023",
         "designedAt": "Work & Co",
         "iconColor": "#000",
