@@ -43,24 +43,23 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             const contentHeight = sidebarRef.current.offsetHeight;
             const containerRect = containerRef.current.getBoundingClientRect();
 
-            // The point where the bottom of the content hits vh - 48px
-            const bottomThreshold = vh - 48;
+            // We want the bottom of the content to be at least 48px from the bottom.
+            const targetBottomPos = vh - 48;
 
-            // Natural position based on Golden Ratio margin
-            const naturalTop = containerRect.top + goldenRatio;
-            const naturalBottom = naturalTop + contentHeight;
+            // Current bottom position if it were scrolling naturally with the container
+            const initialBottom = containerRect.top + goldenRatio + contentHeight;
 
-            if (naturalBottom > bottomThreshold) {
-                // Pin to bottom-48
+            if (initialBottom <= targetBottomPos) {
+                // Pin to bottom-48 using fixed positioning
                 setSidebarStyle({
                     position: 'fixed',
                     bottom: '48px',
-                    width: '25%', // Maintain 1/4 width
+                    width: '25%',
                     padding: '48px',
                     top: 'auto'
                 });
             } else {
-                // Stay at Golden Ratio
+                // Return to absolute position relative to the track
                 setSidebarStyle({
                     position: 'absolute',
                     top: `${goldenRatio}px`,
@@ -72,7 +71,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleScroll);
-        handleScroll(); // Initial check
+        handleScroll();
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -91,11 +90,8 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
     }, [router, isLoaded]);
 
     const handleBack = (e: React.MouseEvent) => {
-        // Only navigate if we're not clicking a link or button
         const target = e.target as HTMLElement;
-        if (target.closest('a, button')) {
-            return;
-        }
+        if (target.closest('a, button')) return;
         router.push('/');
     };
 
@@ -103,31 +99,23 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         <div
             className={`flex flex-col md:flex-row ${isMobile ? 'min-h-[100dvh]' : 'min-h-screen'} bg-white dark:bg-zinc-900 text-black dark:text-white font-sans selection:bg-black selection:text-white relative`}
             onClick={handleBack}
-            style={{
-                cursor: `url('/close.svg') 16 16, auto`,
-            }}
+            style={{ cursor: `url('/close.svg') 16 16, auto` }}
         >
             <style jsx global>{`
-                a, button, .cursor-pointer {
-                    cursor: pointer !important;
-                }
+                a, button, .cursor-pointer { cursor: pointer !important; }
             `}</style>
-            {/* Fixed Breadcrumb - Desktop & Mobile */}
+
             <div className="fixed left-0 top-0 w-full md:w-1/4 p-10 md:p-[48px] z-30 pointer-events-none">
                 <div className="flex flex-col gap-1 pointer-events-auto">
                     <div className="flex items-center gap-1 text-[16px] md:text-sm">
-                        <Link href="/" className="custom-link font-normal">
-                            Projects
-                        </Link>
+                        <Link href="/" className="custom-link font-normal">Projects</Link>
                         <span>/</span>
                         <span className="truncate">{project.title}</span>
                     </div>
                 </div>
             </div>
 
-            {/* Main Content Area */}
             <div className="w-full flex flex-col md:flex-row md:items-stretch" ref={containerRef}>
-                {/* Desktop Left Column - Scrollable with golden-ratio offset and sticky anchoring */}
                 {!isMobile && (
                     <div className="relative w-1/4 hidden md:flex flex-col">
                         <div
@@ -140,13 +128,10 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                 transitionDuration: '600ms',
                             }}
                         >
-                            {/* Description */}
                             <div className="max-w-md flex flex-col gap-[1em]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
-                                        <p key={i} className="leading-relaxed text-base text-black dark:text-white">
-                                            {p}
-                                        </p>
+                                        <p key={i} className="leading-relaxed text-base text-black dark:text-white">{p}</p>
                                     ))
                                 ) : (
                                     <p className="leading-relaxed text-base text-black dark:text-white">
@@ -154,20 +139,13 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </p>
                                 )}
                             </div>
-
-                            {/* Metadata */}
                             <div className="flex flex-col gap-1 text-[13px] text-black">
-                                {/* Awards */}
                                 {project.awards && (
                                     <div className="opacity-50">
                                         <span>Awards: </span>
-                                        <span className="leading-relaxed">
-                                            {project.awards}
-                                        </span>
+                                        <span className="leading-relaxed">{project.awards}</span>
                                     </div>
                                 )}
-
-                                {/* Designed At */}
                                 {project.designedAt && (
                                     <div className="opacity-50">
                                         <span>Designed at: </span>
@@ -179,11 +157,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                     </div>
                 )}
 
-                {/* Content Container (Mobile transition logic preserved) */}
-                <div
-                    className="w-full flex flex-col md:flex-row md:w-3/4"
-                >
-                    {/* Mobile version of side content */}
+                <div className="w-full flex flex-col md:flex-row md:w-3/4">
                     {isMobile && (
                         <div
                             className="w-full p-10 flex flex-col gap-[1em] transition-all"
@@ -195,13 +169,10 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                 transitionDuration: '900ms'
                             }}
                         >
-                            {/* Description */}
                             <div className="max-w-md flex flex-col gap-[1em]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
-                                        <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">
-                                            {p}
-                                        </p>
+                                        <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">{p}</p>
                                     ))
                                 ) : (
                                     <p className="leading-relaxed text-[16px] text-black dark:text-white">
@@ -209,20 +180,13 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </p>
                                 )}
                             </div>
-
-                            {/* Metadata */}
                             <div className="flex flex-col gap-1 text-[16px] text-black">
-                                {/* Awards */}
                                 {project.awards && (
                                     <div className="opacity-50">
                                         <span>Awards: </span>
-                                        <span className="leading-relaxed">
-                                            {project.awards}
-                                        </span>
+                                        <span className="leading-relaxed">{project.awards}</span>
                                     </div>
                                 )}
-
-                                {/* Designed At */}
                                 {project.designedAt && (
                                     <div className="opacity-50">
                                         <span>Designed at: </span>
@@ -233,7 +197,6 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                         </div>
                     )}
 
-                    {/* Right Column - Scrollable Gallery */}
                     <div
                         className="w-full p-[12px] md:p-[12px] transition-opacity mt-4 md:mt-0 pb-[12px]"
                         style={{
@@ -243,31 +206,16 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                         }}
                     >
                         <div className="flex flex-col gap-[12px]">
-                            {/* Placeholder Gallery if empty */}
                             {(!project.gallery || project.gallery.length === 0) && (
                                 <>
-                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
-                                        Image 1
-                                    </div>
-                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
-                                        Image 2
-                                    </div>
-                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">
-                                        Image 3
-                                    </div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">Image 1</div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">Image 2</div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">Image 3</div>
                                 </>
                             )}
-
                             {project.gallery?.map((img, index) => (
                                 <div key={index} className="w-full aspect-[3/2] rounded-[8px] overflow-hidden relative">
-                                    <Image
-                                        src={img}
-                                        alt={`${project.title} gallery ${index + 1}`}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, 75vw"
-                                        priority={index === 0}
-                                    />
+                                    <Image src={img} alt={`${project.title} gallery ${index + 1}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 75vw" priority={index === 0} />
                                 </div>
                             ))}
                         </div>
