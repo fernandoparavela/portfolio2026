@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { projects } from '../data/projects';
 import Card from './Card';
+import Lenis from 'lenis';
 
 export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -12,11 +13,21 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
         const container = scrollContainerRef.current;
         if (!container || isMobile) return;
 
-        const handleWheel = (e: WheelEvent) => {
-            if (e.deltaY === 0) return;
-            e.preventDefault();
-            container.scrollLeft += e.deltaY;
-        };
+        const lenis = new Lenis({
+            wrapper: container,
+            content: container.firstElementChild as HTMLElement,
+            orientation: 'horizontal',
+            gestureOrientation: 'both', // Allow vertical mouse wheel to scroll horizontal
+            smoothWheel: true,
+            lerp: 0.1,
+        });
+
+        function raf(time: number) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
 
         const handleScroll = () => {
             const maxScroll = container.scrollWidth - container.clientWidth;
@@ -26,13 +37,11 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
             container.style.setProperty('--card-gap', `${gap}px`);
         };
 
-        container.addEventListener('wheel', handleWheel, { passive: false });
-        container.addEventListener('scroll', handleScroll);
+        lenis.on('scroll', handleScroll);
         handleScroll();
 
         return () => {
-            container.removeEventListener('wheel', handleWheel);
-            container.removeEventListener('scroll', handleScroll);
+            lenis.destroy();
         };
     }, [isMobile]);
 
@@ -72,7 +81,7 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
     return (
         <div
             ref={scrollContainerRef}
-            className={`w-full ${isMobile ? 'touch-pan-y' : 'h-full md:overflow-x-auto overflow-y-auto md:overflow-y-hidden'} no-scrollbar bg-zinc-50 dark:bg-zinc-900`}
+            className={`w-full ${isMobile ? 'touch-pan-y' : 'h-full md:overflow-x-auto overflow-y-auto md:overflow-y-hidden pointer-events-auto'} no-scrollbar bg-zinc-50 dark:bg-zinc-900`}
             style={{
                 '--card-gap': isMobile ? '12px' : '25px',
                 paddingTop: isMobile ? 'calc(100vh - (100vh / 1.618))' : '0'
