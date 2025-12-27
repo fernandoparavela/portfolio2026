@@ -35,17 +35,6 @@ export default function Footer({ isAboutOpen, onToggleAbout, isLoaded = true, is
                 >
                     <span className="font-bold">Fernando Paravela</span>
                     <span className="font-normal">Design Director, Experience Design</span>
-                    {isMobile && (
-                        <button
-                            onClick={onToggleAbout}
-                            className="custom-link mt-[20px] text-left outline-none w-fit cursor-pointer transition-colors duration-[300ms] delay-[600ms]"
-                            style={{
-                                color: isAboutOpen ? '#fff' : '#000'
-                            }}
-                        >
-                            {isAboutOpen ? 'Back' : 'More info'}
-                        </button>
-                    )}
                 </div>
 
                 <div className={`flex flex-col w-[25%] ${isMobile ? 'hidden' : 'flex'}`}>
@@ -61,13 +50,12 @@ export default function Footer({ isAboutOpen, onToggleAbout, isLoaded = true, is
                 <div className={`flex flex-col ${isMobile ? 'w-auto' : 'w-[16.66%]'} items-end self-center`}>
                     <button
                         onClick={onToggleAbout}
-                        className={`outline-none transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 cursor-pointer ${isMobile ? 'hidden' : 'block'}`}
+                        className={`outline-none transition-all duration-300 ease-in-out hover:scale-110 active:scale-95 cursor-pointer block`}
                         style={{
                             transform: isAboutOpen ? 'rotate(45deg)' : 'rotate(0deg)',
                             filter: isAboutOpen ? 'invert(1)' : 'none' // To make the black icon white
                         }}
                     >
-                        {/* Check if user wants + or text. User said "same footer". Footer has + icon. Using + icon. */}
                         <img src="/plus-close.svg" alt="Toggle About" className="w-[40px] h-[40px]" />
                     </button>
                 </div>

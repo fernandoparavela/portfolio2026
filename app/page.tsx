@@ -38,6 +38,15 @@ export default function Home() {
     };
   }, [isAboutOpen]);
 
+  // Lock background scroll when About is open
+  useEffect(() => {
+    if (isAboutOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isAboutOpen]);
+
   // Adjust header opacity based on scroll
   const handleAboutScroll = (scrollTop: number) => {
     if (!mobileHeaderRef.current) return;
@@ -70,18 +79,6 @@ export default function Home() {
           position: 'relative'
         }}
       >
-        {/* Mobile Header (Scrolls with gallery, pops over About on z-index) using Footer component */}
-        {isMobile && (
-          <div className={`md:hidden relative z-[60] transition-colors duration-[750ms] ${isAboutOpen ? 'text-white' : 'text-black'}`}>
-            <Footer
-              isAboutOpen={isAboutOpen}
-              onToggleAbout={() => setIsAboutOpen(!isAboutOpen)}
-              isLoaded={isLoaded}
-              isMobile={true}
-              mobileHeaderRef={mobileHeaderRef}
-            />
-          </div>
-        )}
         <Carousel isLoaded={isLoaded} />
       </main>
 
@@ -95,6 +92,19 @@ export default function Home() {
 
       {/* Global Elements (Header, Footer) - Always on Top */}
       <div className={`fixed inset-0 pointer-events-none z-[60] transition-colors duration-[750ms] ${isAboutOpen && !isMobile ? 'text-white' : 'text-black'}`}>
+
+        {/* Mobile Header (Fixed & on Top) */}
+        {isMobile && (
+          <div className={`md:hidden absolute top-0 left-0 w-full pointer-events-auto transition-colors duration-[750ms] ${isAboutOpen ? 'text-white' : 'text-black'}`}>
+            <Footer
+              isAboutOpen={isAboutOpen}
+              onToggleAbout={() => setIsAboutOpen(!isAboutOpen)}
+              isLoaded={isLoaded}
+              isMobile={true}
+              mobileHeaderRef={mobileHeaderRef}
+            />
+          </div>
+        )}
 
         {/* Desktop Footer (Hidden on Mobile via Footer's internal class) */}
         {!isMobile && (

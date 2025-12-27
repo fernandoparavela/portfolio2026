@@ -95,8 +95,11 @@
         "color": "bg-[#1a1a1a]",
         "textColor": "text-white",
         "image": "/cards/idea-zarvos.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "awards": "LAD Awards 2022",
+        "description": [
+            "IdeaZarvos is a real estate developer with the soul of an architecture studio, known for partnering with internationally recognized architects to create distinctive buildings that have reshaped São Paulo’s urban landscape. The challenge was to translate this vision into a digital experience that could inspire, inform, and convert.",
+            "Launched in 2020, the website works both as an immersive gallery of architectural projects and as a lead-generation and sales-support channel. A restrained modernist interface minimizes visual friction and keeps focus on the photography, helping users explore projects, form intent, and move naturally toward contact. Subtle motion—such as shifting shadows or gentle movement in trees—adds a tactile quality to the experience, encouraging deeper engagement with the spaces. By combining emotional resonance with clarity and usability, the site strengthens connection with the brand and supports high-quality lead generation."
+        ],
+        "awards": "Brasil Design Awards 2021",
         "designedAt": "Try (WPP Group)",
         "iconColor": "#fff",
         "gallery": [
@@ -129,7 +132,10 @@
         "gallery": [
             "/projects/farm/farm-1.png",
             "/projects/farm/farm-2.png",
-            "/projects/farm/farm-3.png"
+            "/projects/farm/farm-3.png",
+            "/projects/farm/farm-4.png",
+            "/projects/farm/farm-5.png",
+            "/projects/farm/farm-6.png"
         ]
     },
     {

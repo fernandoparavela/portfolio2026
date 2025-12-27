@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import PasswordGate from '../../components/PasswordGate';
 import { useRouter } from 'next/navigation';
+import { projects } from '../../data/projects';
 
 interface Project {
     id: string;
@@ -164,7 +165,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
             <div className="fixed left-0 top-0 w-full md:w-1/4 p-10 md:p-[48px] z-30 pointer-events-none">
                 <div ref={headerRef} className="flex flex-col gap-1 pointer-events-auto transition-opacity duration-300">
-                    <div className="flex items-center gap-1 text-[16px] md:text-sm">
+                    <div className="flex items-center gap-1 text-[16px]">
                         <Link href="/" className="custom-link font-normal">Projects</Link>
                         <span>/</span>
                         <span className="truncate">{project.title}</span>
@@ -177,15 +178,17 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                     <div className="relative w-1/4 hidden md:flex flex-col h-full">
                         <div
                             ref={sidebarRef}
-                            className="flex flex-col gap-[1em] transition-opacity"
+                            className="flex flex-col"
                             style={{
                                 ...sidebarStyle,
                                 opacity: isLoaded ? 1 : 0,
+                                transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                                transitionProperty: 'opacity, transform',
                                 transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
-                                transitionDuration: '600ms',
+                                transitionDuration: '750ms',
                             }}
                         >
-                            <div className="max-w-md flex flex-col gap-[1em]">
+                            <div className="max-w-md flex flex-col gap-[12px]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
                                         <p key={i} className="leading-relaxed text-base text-black dark:text-white">{p}</p>
@@ -196,7 +199,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </p>
                                 )}
                             </div>
-                            <div className="flex flex-col gap-1 text-[13px] text-black">
+                            <div className="flex flex-col gap-[12px] text-[14px] text-black mt-[24px]">
                                 {project.awards && (
                                     <div className="opacity-50">
                                         <span>Awards: </span>
@@ -210,6 +213,19 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </div>
                                 )}
                             </div>
+                            {(() => {
+                                const currentIndex = projects.findIndex(p => p.id === project.id);
+                                const nextIndex = (currentIndex + 1) % projects.length;
+                                const nextProject = projects[nextIndex];
+                                return (
+                                    <Link
+                                        href={`/projects/${nextProject.slug}`}
+                                        className="flex items-center justify-center h-[56px] px-4 pt-[2px] rounded-full border border-black/10 text-[14px] text-black w-fit mt-[24px] hover:bg-black/5 transition-colors"
+                                    >
+                                        Next project
+                                    </Link>
+                                );
+                            })()}
                         </div>
                     </div>
                 )}
@@ -218,16 +234,17 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                     {isMobile && (
                         <div
                             ref={mobileSidebarRef}
-                            className="w-full p-10 flex flex-col gap-[1em] transition-all"
+                            className="w-full p-10 flex flex-col"
                             style={{
                                 paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
                                 transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
                                 opacity: isLoaded ? 1 : 0,
+                                transitionProperty: 'opacity, transform',
                                 transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
-                                transitionDuration: '900ms'
+                                transitionDuration: '750ms'
                             }}
                         >
-                            <div className="max-w-md flex flex-col gap-[1em]">
+                            <div className="max-w-md flex flex-col gap-[12px]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
                                         <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">{p}</p>
@@ -238,7 +255,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </p>
                                 )}
                             </div>
-                            <div className="flex flex-col gap-1 text-[16px] text-black">
+                            <div className="flex flex-col gap-[12px] text-[14px] text-black mt-[24px]">
                                 {project.awards && (
                                     <div className="opacity-50">
                                         <span>Awards: </span>
@@ -252,6 +269,19 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </div>
                                 )}
                             </div>
+                            {(() => {
+                                const currentIndex = projects.findIndex(p => p.id === project.id);
+                                const nextIndex = (currentIndex + 1) % projects.length;
+                                const nextProject = projects[nextIndex];
+                                return (
+                                    <Link
+                                        href={`/projects/${nextProject.slug}`}
+                                        className="flex items-center justify-center h-[56px] px-4 pt-[2px] rounded-full border border-black/10 text-[14px] text-black w-fit mt-[24px] hover:bg-black/5 transition-colors"
+                                    >
+                                        Next project
+                                    </Link>
+                                );
+                            })()}
                         </div>
                     )}
 

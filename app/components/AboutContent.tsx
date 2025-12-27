@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 
 export default function AboutContent({ isVisible, onClose, isMobile: propIsMobile, onScroll }: { isVisible: boolean; onClose?: () => void; isMobile?: boolean; onScroll?: (scrollTop: number) => void }) {
     const [isMobile, setIsMobile] = useState(propIsMobile || false);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (propIsMobile !== undefined) {
@@ -14,6 +17,41 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
         return () => window.removeEventListener('resize', handleResize);
     }, [propIsMobile]);
 
+    useEffect(() => {
+        if (!isVisible) return;
+
+        const scrollContainer = isMobile ? rootRef.current : contentRef.current;
+        if (!scrollContainer) return;
+
+        const lenis = new Lenis({
+            wrapper: scrollContainer,
+            content: scrollContainer.firstElementChild as HTMLElement,
+            lerp: 0.1,
+            duration: 1.2,
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+        });
+
+        lenis.on('scroll', ({ scroll }: { scroll: number }) => {
+            if (onScroll) {
+                onScroll(scroll);
+            }
+        });
+
+        function raf(time: number) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        const rafId = requestAnimationFrame(raf);
+
+        return () => {
+            cancelAnimationFrame(rafId);
+            lenis.destroy();
+        };
+    }, [isVisible, isMobile, onScroll]);
+
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (onScroll) {
             onScroll(e.currentTarget.scrollTop);
@@ -22,7 +60,8 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
 
     return (
         <div
-            onScroll={isMobile ? handleScroll : undefined}
+            ref={rootRef}
+            onScroll={handleScroll}
             className={`fixed inset-0 z-[50] transition-transform duration-[750ms] bg-[#000] text-white ${isMobile ? 'overflow-y-auto' : ''}`}
             style={{
                 transform: isVisible ? 'translateY(0)' : 'translateY(100vh)',
@@ -30,9 +69,10 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
                 pointerEvents: isVisible ? 'auto' : 'none'
             }}
         >
-            {/* Header removed to use parent's instance */}
             {/* Bio Content Area */}
             <div
+                ref={contentRef}
+                onScroll={!isMobile ? handleScroll : undefined}
                 className={`${isMobile ? 'relative' : 'absolute h-full overflow-y-auto'} w-full no-scrollbar pointer-events-auto px-10 md:px-0`}
                 style={{
                     paddingTop: isMobile
@@ -60,14 +100,12 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
                         {/* Bio Text */}
                         <div className="flex flex-col gap-[0.75em]">
                             <p className="text-[16px] md:text-[24px] leading-[1.5] tracking-tight text-white m-0">
-                                My work lies at the intersection of UX, Visual Design, and Brand Strategy. I aim to strategically combine these disciplines to create digital products that go beyond utility, building those additional layers of meaning and emotion that make people connect with brands and products on a deeper level.
+                                I’ve been working in digital design for over 20 years. Throughout this journey, across the different industry contexts that span these two decades, my work has consistently lived at the intersection of UX, Visual Design, and Brand Strategy—bringing these disciplines together with the goal of shaping digital products that are not only useful, but also meaningful and emotionally resonant.
                             </p>
                             <p className="text-[16px] md:text-[24px] leading-[1.5] tracking-tight text-white m-0">
-                                This approach lead to projects that were internationally recognized by awards such as the  Brasil Design Award, UX Design Awards, Good Design Award, Latin America Design Awards, Bienal Iberoamericana de Diseño, CLAP Awards, Museu da Casa Brasileira and Awwwards.
-                            </p>
+                                Although my practice may appear deeply rooted in visual design, I see design as a holistic and strategic discipline. A coherent aesthetic is not decoration; it exists to support usability, clarify intent, and contribute to business outcomes. Form only matters when it is grounded in hypotheses, tested through evidence, and validated by data. I also believe that strong design requires a clear and intentional point of view; while many design frameworks aim for consensus among stakeholders, consensus often leads to average outcomes. Design demands a certain level of conviction—the courage to make informed choices, challenge the obvious, and move beyond the safest solution.                            </p>
                             <p className="text-[16px] md:text-[24px] leading-[1.5] tracking-tight text-white m-0">
-                                I am also deeply invested in the management aspect of the work. I've been scouting new talent, building teams, and mentoring younger professionals for several years now, always aiming to lead by example, with empathy and care.
-                            </p>
+                                Alongside hands-on work, I’ve spent many years building teams, mentoring designers, and supporting talent growth. I aim to lead with empathy and care, fostering environments where strong craft, critical thinking, brutally honest feedback, and thoughtful collaboration can thrive.</p>
 
                         </div>
 
