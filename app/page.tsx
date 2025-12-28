@@ -11,7 +11,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [isStable, setIsStable] = useState(false);
 
-  const mobileHeaderRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mobile = window.innerWidth < 768;
@@ -48,12 +48,42 @@ export default function Home() {
   }, [isAboutOpen]);
 
   // Adjust header opacity based on scroll
-  const handleAboutScroll = (scrollTop: number) => {
-    if (!mobileHeaderRef.current) return;
+  const updateHeaderOpacity = (scrollTop: number) => {
+    if (!headerRef.current) return;
     // Fade out from 0 to 100px
     const opacity = Math.max(0, 1 - scrollTop / 100);
-    mobileHeaderRef.current.style.opacity = opacity.toString();
+    headerRef.current.style.opacity = opacity.toString();
   };
+
+  const handleAboutScroll = (scrollTop: number) => {
+    updateHeaderOpacity(scrollTop);
+  };
+
+  // Handle Mobile/Window scroll for Gallery view
+  useEffect(() => {
+    const handleWindowScroll = () => {
+      if (!isAboutOpen) {
+        updateHeaderOpacity(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    // Initialize opacity on mount/stable
+    if (isStable && !isAboutOpen) {
+      updateHeaderOpacity(window.scrollY);
+    }
+    return () => window.removeEventListener('scroll', handleWindowScroll);
+  }, [isAboutOpen, isStable]);
+
+  // Sync opacity when toggling About
+  useEffect(() => {
+    if (isAboutOpen) {
+      // Allow a frame for layout? Usually safe to set immediately if overlay is open
+      updateHeaderOpacity(0);
+    } else {
+      updateHeaderOpacity(window.scrollY);
+    }
+  }, [isAboutOpen]);
 
   return (
     <div className={`relative w-full ${isMobile ? 'min-h-[100dvh]' : 'h-screen overflow-hidden'} font-sans bg-zinc-50`}>
@@ -66,9 +96,7 @@ export default function Home() {
           transform: isStable
             ? (!isLoaded
               ? (isMobile ? 'translateY(80px)' : 'translateX(80px)')
-              : !isMobile && isAboutOpen
-                ? 'translateY(-100%)'
-                : 'none')
+              : 'none')
             : 'translateY(80px)', // Default to Y (vertical) for initial/server render to avoid mobile Horizontal slide and hydration mismatch
           opacity: isLoaded ? 1 : 0,
           transition: isStable && isLoaded
@@ -101,7 +129,7 @@ export default function Home() {
               onToggleAbout={() => setIsAboutOpen(!isAboutOpen)}
               isLoaded={isLoaded}
               isMobile={true}
-              mobileHeaderRef={mobileHeaderRef}
+              headerRef={headerRef}
             />
           </div>
         )}
@@ -113,6 +141,7 @@ export default function Home() {
               isAboutOpen={isAboutOpen}
               onToggleAbout={() => setIsAboutOpen(!isAboutOpen)}
               isLoaded={isLoaded}
+              headerRef={headerRef}
             />
           </div>
         )}

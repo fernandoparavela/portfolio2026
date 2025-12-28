@@ -8,6 +8,7 @@ import Lenis from 'lenis';
 export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [isHugeScreen, setIsHugeScreen] = useState(false);
 
     useEffect(() => {
         const container = scrollContainerRef.current;
@@ -33,7 +34,11 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
             const maxScroll = container.scrollWidth - container.clientWidth;
             if (maxScroll <= 0) return;
             const progress = Math.min(1, Math.max(0, container.scrollLeft / maxScroll));
-            const gap = 25 - (progress * 30);
+
+            const baseGap = isHugeScreen ? 80 : 0;
+            const reductionFactor = isHugeScreen ? 90 : 5;
+            const gap = baseGap - (progress * reductionFactor);
+
             container.style.setProperty('--card-gap', `${gap}px`);
         };
 
@@ -43,13 +48,17 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
         return () => {
             lenis.destroy();
         };
-    }, [isMobile]);
+    }, [isMobile, isHugeScreen]);
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
+        const checkDimensions = () => {
+            setIsMobile(window.innerWidth < 768);
+            setIsHugeScreen(window.innerWidth >= 1920);
+        };
+        checkDimensions();
+
+        window.addEventListener('resize', checkDimensions);
+        return () => window.removeEventListener('resize', checkDimensions);
     }, []);
 
     const calculatedItems = (() => {
@@ -83,7 +92,7 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
             ref={scrollContainerRef}
             className={`w-full ${isMobile ? 'touch-pan-y' : 'h-full md:overflow-x-auto overflow-y-auto md:overflow-y-hidden pointer-events-auto'} no-scrollbar bg-zinc-50 dark:bg-zinc-900`}
             style={{
-                '--card-gap': isMobile ? '12px' : '25px',
+                '--card-gap': isMobile ? '12px' : (isHugeScreen ? '80px' : '0px'),
                 paddingTop: isMobile ? 'calc(100vh - (100vh / 1.618))' : '0'
             } as React.CSSProperties}
         >
@@ -91,11 +100,10 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
                 {calculatedItems.map((item, index) => (
                     <div
                         key={item.id}
-                        className="w-full md:w-auto shrink-0 transition-all duration-700 ease-out"
+                        className={`w-full md:w-auto shrink-0 transition-all duration-700 ease-out ${index === 0 ? '' : 'md:ml-[var(--card-gap)]'}`}
                         style={{
                             transitionDelay: `${index * 50}ms`,
-                            marginLeft: index === 0 ? 0 : 'md:var(--card-gap)',
-                            transform: isMobile ? 'none' : `rotate(${item.rotation}deg)`,
+                            transform: isMobile ? 'none' : `rotate(${item.rotation}deg) scale(${isHugeScreen ? 1.25 : 1})`,
                             transitionProperty: isLoaded ? 'all' : 'none'
                         }}
                     >

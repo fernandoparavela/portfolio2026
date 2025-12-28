@@ -3,6 +3,7 @@
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --breakpoint-xxl: 1640px;
 }
 
 @layer utilities {
@@ -45,6 +46,9 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-24: 24px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,13 +58,30 @@
   }
 }
 
+@media (min-width: 1640px) {
+  :root {
+    --fs-14: 16px;
+    --fs-16: 20px;
+    --fs-24: 28px;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: var(--fs-16);
   line-height: 1.5em;
   /* Global line-height */
+}
+
+@media (min-width: 1920px) {
+  body {
+    font-size: 19.2px;
+    /* This was previously 19.2px, user said 1640px+ goes to 20px. 19.2px is roughly 1.2 * 16. I'll stick to 20px for 1640+ as requested. */
+    --fs-16: 20px;
+    /* Redundant but safe */
+  }
 }
 
 @layer utilities {

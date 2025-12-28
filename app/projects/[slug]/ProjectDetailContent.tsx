@@ -18,12 +18,12 @@ interface Project {
     slug: string;
 }
 
-export default function ProjectDetailContent({ project }: { project: Project }) {
+function ProjectContent({ project }: { project: Project }) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    const [sidebarStyle, setSidebarStyle] = useState<React.CSSProperties>({});
     const sidebarRef = useRef<HTMLDivElement>(null);
     const mobileSidebarRef = useRef<HTMLDivElement>(null);
+    const mobileContentRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -34,6 +34,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         window.addEventListener('resize', handleResize);
 
         const timer = setTimeout(() => setIsLoaded(true), 100);
+        window.scrollTo(0, 0);
 
         const handleScroll = () => {
             // Header Fade Logic (Overlap Dependent)
@@ -42,7 +43,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 const headerBottom = headerRect.bottom;
 
                 // Use the relevant sidebar ref based on current view
-                const activeSidebar = window.innerWidth < 768 ? mobileSidebarRef.current : sidebarRef.current;
+                const activeSidebar = window.innerWidth < 768 ? mobileContentRef.current : sidebarRef.current;
 
                 if (activeSidebar) {
                     const sidebarRect = activeSidebar.getBoundingClientRect();
@@ -60,16 +61,18 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 }
             }
 
-            if (window.innerWidth < 768 || !sidebarRef.current || !containerRef.current) {
+            if (window.innerWidth < 768 || !sidebarRef.current || !containerRef.current || !isLoaded) {
                 // If refs aren't ready yet, we still want a reasonable starting position
                 const vh = window.innerHeight;
                 const goldenRatio = vh - (vh / 1.618);
-                setSidebarStyle({
-                    position: 'absolute',
-                    top: `${goldenRatio}px`,
-                    width: '100%',
-                    padding: '48px'
-                });
+
+                if (sidebarRef.current) {
+                    sidebarRef.current.style.position = 'absolute';
+                    sidebarRef.current.style.top = `${goldenRatio}px`;
+                    sidebarRef.current.style.width = '100%';
+                    sidebarRef.current.style.padding = '48px';
+                    sidebarRef.current.style.bottom = 'auto'; // Reset
+                }
                 return;
             }
 
@@ -77,16 +80,25 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             const containerRect = containerRef.current.getBoundingClientRect();
             const galleryHeight = containerRect.height;
 
+            if (galleryHeight === 0) {
+                if (sidebarRef.current) {
+                    sidebarRef.current.style.position = 'absolute';
+                    sidebarRef.current.style.top = `${goldenRatio}px`;
+                    sidebarRef.current.style.width = '100%';
+                    sidebarRef.current.style.padding = '48px';
+                    sidebarRef.current.style.bottom = 'auto';
+                }
+                return;
+            }
+
             // "Short" project: total content matches or is less than viewport height
             // simply position at the bottom edge for these cases
             if (galleryHeight <= vh + 10) {
-                setSidebarStyle({
-                    position: 'absolute',
-                    bottom: '0px',
-                    width: '100%',
-                    padding: '48px',
-                    top: 'auto'
-                });
+                sidebarRef.current.style.position = 'absolute';
+                sidebarRef.current.style.bottom = '0px';
+                sidebarRef.current.style.width = '100%';
+                sidebarRef.current.style.padding = '48px';
+                sidebarRef.current.style.top = 'auto'; // Reset
                 return;
             }
 
@@ -99,23 +111,21 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
             const naturalTop = containerRect.top + goldenRatio;
             const naturalBottom = naturalTop + contentHeight;
 
-            if (naturalBottom <= anchorBottom) {
-                setSidebarStyle({
-                    position: 'fixed',
-                    bottom: '0px',
-                    width: '25%', // Keep sidebar width consistent
-                    padding: '48px',
-                    top: 'auto'
-                });
+            if (naturalBottom <= anchorBottom && contentHeight <= (vh / 1.618)) {
+                const isTablet = window.innerWidth >= 768 && window.innerWidth < 1280;
+                sidebarRef.current.style.position = 'fixed';
+                sidebarRef.current.style.bottom = '0px';
+                sidebarRef.current.style.width = isTablet ? '40%' : '25%'; // 40% for tablet, 25% for desktop
+                sidebarRef.current.style.padding = '48px';
+                sidebarRef.current.style.top = 'auto'; // Reset
             } else {
-                setSidebarStyle({
-                    position: 'absolute',
-                    top: `${goldenRatio}px`,
-                    width: '100%',
-                    padding: '48px'
-                });
+                sidebarRef.current.style.position = 'absolute';
+                sidebarRef.current.style.top = `${goldenRatio}px`;
+                sidebarRef.current.style.width = '100%';
+                sidebarRef.current.style.padding = '48px';
+                sidebarRef.current.style.bottom = 'auto'; // Reset
             }
-        };
+        }
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleScroll);
@@ -129,8 +139,22 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
         }
+        if (sidebarRef.current) {
+            resizeObserver.observe(sidebarRef.current);
+        }
 
-        handleScroll();
+        if (isLoaded) {
+            // Force check a few times to handle layout settling
+            requestAnimationFrame(() => {
+                handleScroll();
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    setTimeout(handleScroll, 100);
+                });
+            });
+        } else {
+            handleScroll();
+        }
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') router.push('/');
@@ -153,7 +177,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
         router.push('/');
     };
 
-    const PageContent = (
+    return (
         <div
             className={`flex flex-col md:flex-row ${isMobile ? 'min-h-[100dvh]' : 'min-h-screen'} bg-white dark:bg-zinc-900 text-black dark:text-white font-sans selection:bg-black selection:text-white relative`}
             onClick={handleBack}
@@ -163,7 +187,7 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                 a, button, .cursor-pointer { cursor: pointer !important; }
             `}</style>
 
-            <div className="fixed left-0 top-0 w-full md:w-1/4 p-10 md:p-[48px] z-30 pointer-events-none">
+            <div className="fixed left-0 top-0 w-full md:w-[40%] xl:w-1/4 p-10 md:p-[48px] z-30 pointer-events-none">
                 <div ref={headerRef} className="flex flex-col gap-1 pointer-events-auto transition-opacity duration-300">
                     <div className="flex items-center gap-1 text-[16px]">
                         <Link href="/" className="custom-link font-normal">Projects</Link>
@@ -175,73 +199,19 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
 
             <div className="w-full flex flex-col md:flex-row md:items-stretch flex-grow" ref={containerRef}>
                 {!isMobile && (
-                    <div className="relative w-1/4 hidden md:flex flex-col h-full">
+                    <div className="relative w-full md:w-[40%] xl:w-1/4 hidden md:flex flex-col h-full">
                         <div
                             ref={sidebarRef}
                             className="flex flex-col"
                             style={{
-                                ...sidebarStyle,
+                                position: 'absolute',
+                                top: '38.2vh',
+                                width: '100%',
                                 opacity: isLoaded ? 1 : 0,
                                 transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
                                 transitionProperty: 'opacity, transform',
                                 transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
                                 transitionDuration: '750ms',
-                            }}
-                        >
-                            <div className="max-w-md flex flex-col gap-[12px]">
-                                {Array.isArray(project.description) ? (
-                                    (project.description as string[]).map((p, i) => (
-                                        <p key={i} className="leading-relaxed text-base text-black dark:text-white">{p}</p>
-                                    ))
-                                ) : (
-                                    <p className="leading-relaxed text-base text-black dark:text-white">
-                                        {project.description || "Project description goes here."}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="flex flex-col gap-[12px] text-[14px] text-black mt-[24px]">
-                                {project.awards && (
-                                    <div className="opacity-50">
-                                        <span>Awards: </span>
-                                        <span className="leading-relaxed">{project.awards}</span>
-                                    </div>
-                                )}
-                                {project.designedAt && (
-                                    <div className="opacity-50">
-                                        <span>Designed at </span>
-                                        <span>{project.designedAt}</span>
-                                    </div>
-                                )}
-                            </div>
-                            {(() => {
-                                const currentIndex = projects.findIndex(p => p.id === project.id);
-                                const nextIndex = (currentIndex + 1) % projects.length;
-                                const nextProject = projects[nextIndex];
-                                return (
-                                    <Link
-                                        href={`/projects/${nextProject.slug}`}
-                                        className="flex items-center justify-center h-[56px] px-4 pt-[2px] rounded-full border border-black/10 text-[14px] text-black w-fit mt-[24px] hover:bg-black/5 transition-colors"
-                                    >
-                                        Next project
-                                    </Link>
-                                );
-                            })()}
-                        </div>
-                    </div>
-                )}
-
-                <div className="w-full flex flex-col md:flex-row md:w-3/4">
-                    {isMobile && (
-                        <div
-                            ref={mobileSidebarRef}
-                            className="w-full p-10 flex flex-col"
-                            style={{
-                                paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
-                                transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
-                                opacity: isLoaded ? 1 : 0,
-                                transitionProperty: 'opacity, transform',
-                                transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
-                                transitionDuration: '750ms'
                             }}
                         >
                             <div className="max-w-md flex flex-col gap-[12px]">
@@ -255,33 +225,65 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                                     </p>
                                 )}
                             </div>
-                            <div className="flex flex-col gap-[12px] text-[14px] text-black mt-[24px]">
+                            <div className="flex flex-col gap-0 text-[16px] text-black mt-[24px]">
                                 {project.awards && (
-                                    <div className="opacity-50">
+                                    <div className="opacity-50 leading-relaxed">
                                         <span>Awards: </span>
-                                        <span className="leading-relaxed">{project.awards}</span>
+                                        <span>{project.awards}</span>
                                     </div>
                                 )}
                                 {project.designedAt && (
-                                    <div className="opacity-50">
+                                    <div className="opacity-50 leading-relaxed">
                                         <span>Designed at </span>
                                         <span>{project.designedAt}</span>
                                     </div>
                                 )}
                             </div>
-                            {(() => {
-                                const currentIndex = projects.findIndex(p => p.id === project.id);
-                                const nextIndex = (currentIndex + 1) % projects.length;
-                                const nextProject = projects[nextIndex];
-                                return (
-                                    <Link
-                                        href={`/projects/${nextProject.slug}`}
-                                        className="flex items-center justify-center h-[56px] px-4 pt-[2px] rounded-full border border-black/10 text-[14px] text-black w-fit mt-[24px] hover:bg-black/5 transition-colors"
-                                    >
-                                        Next project
-                                    </Link>
-                                );
-                            })()}
+
+                        </div>
+                    </div>
+                )}
+
+                <div className="w-full flex flex-col md:flex-row md:w-[60%] xl:w-3/4">
+                    {isMobile && (
+                        <div
+                            ref={mobileSidebarRef}
+                            className="w-full p-10 flex flex-col"
+                            style={{
+                                paddingTop: 'calc(100vh - (100vh / 1.618) - 100px)',
+                                transform: isLoaded ? 'translateY(0)' : 'translateY(80px)',
+                                opacity: isLoaded ? 1 : 0,
+                                transitionProperty: 'opacity, transform',
+                                transitionTimingFunction: 'cubic-bezier(0.75, -0.01, 0.25, 1)',
+                                transitionDuration: '750ms'
+                            }}
+                        >
+                            <div ref={mobileContentRef} className="max-w-md flex flex-col gap-[12px]">
+                                {Array.isArray(project.description) ? (
+                                    (project.description as string[]).map((p, i) => (
+                                        <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">{p}</p>
+                                    ))
+                                ) : (
+                                    <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                        {project.description || "Project description goes here."}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="flex flex-col gap-0 text-[16px] text-black mt-[24px]">
+                                {project.awards && (
+                                    <div className="opacity-50 leading-relaxed">
+                                        <span>Awards: </span>
+                                        <span>{project.awards}</span>
+                                    </div>
+                                )}
+                                {project.designedAt && (
+                                    <div className="opacity-50 leading-relaxed">
+                                        <span>Designed at </span>
+                                        <span>{project.designedAt}</span>
+                                    </div>
+                                )}
+                            </div>
+
                         </div>
                     )}
 
@@ -303,19 +305,25 @@ export default function ProjectDetailContent({ project }: { project: Project }) 
                             )}
                             {project.gallery?.map((img, index) => (
                                 <div key={index} className="w-full aspect-[3/2] rounded-[8px] overflow-hidden relative">
-                                    <Image src={img} alt={`${project.title} gallery ${index + 1}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 75vw" priority={index === 0} />
+                                    <Image src={img} alt={`${project.title} gallery ${index + 1}`} fill className="object-cover" sizes="(max-width: 1080px) 100vw, 75vw" priority={index === 0} />
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
+}
 
+export default function ProjectDetailContent({ project }: { project: Project }) {
     if (project.protected) {
-        return <PasswordGate projectTitle={project.title}>{PageContent}</PasswordGate>;
+        return (
+            <PasswordGate projectTitle={project.title}>
+                <ProjectContent project={project} />
+            </PasswordGate>
+        );
     }
 
-    return PageContent;
+    return <ProjectContent project={project} />;
 }

@@ -37,7 +37,7 @@ export default function Card({ project, rotation, index, isMobile, isLoaded = fa
 
                 <div className="relative z-10 flex flex-col gap-[4px]">
                     <h3 className="text-3xl font-medium tracking-[-0.5px]">{project.title}</h3>
-                    <p className="text-sm opacity-80 font-normal">{project.category}</p>
+                    <p className="text-[16px] opacity-80 font-normal">{project.category}</p>
                 </div>
 
                 {/* Lock icon */}

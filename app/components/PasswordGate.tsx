@@ -28,7 +28,7 @@ export default function PasswordGate({ children, projectTitle }: { children: Rea
         <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
             {/* Header */}
             <div className="fixed left-0 top-0 p-[48px] z-10">
-                <div className="flex items-center gap-1 text-sm">
+                <div className="flex items-center gap-1 text-[16px]">
                     <Link href="/" className="underline hover:no-underline">
                         Projects
                     </Link>

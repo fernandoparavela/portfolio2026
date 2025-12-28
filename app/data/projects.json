@@ -89,6 +89,29 @@
     },
     {
         "id": "4",
+        "slug": "farm-rio",
+        "title": "Farm Rio",
+        "category": "E-commerce",
+        "color": "bg-[#001a4d]",
+        "textColor": "text-white",
+        "image": "/cards/farm-rio.png",
+        "description": [
+            "Farm Rio approached Accenture in 2021 to evolve its off-the-shelf e-commerce platform into a channel that could better reflect the brand’s unique energy — one that inspires exploration while supporting a frictionless shopping journey. The result was a decluttered design that lets the products’ rich patterns and vibrant colors take center stage. A minimalist interface allows the photography to sustain the brand identity, making the storefront easily adaptable to seasonal campaigns and new collections.",
+            "Video played a central role in elevating product presentation. Movement is embedded throughout the experience, encouraging exploration and guiding comparison and decision-making — ultimately supporting conversion."
+        ],
+        "designedAt": "Accenture Song",
+        "iconColor": "#fff",
+        "gallery": [
+            "/projects/farm/farm-1.png",
+            "/projects/farm/farm-2.png",
+            "/projects/farm/farm-3.png",
+            "/projects/farm/farm-4.png",
+            "/projects/farm/farm-5.png",
+            "/projects/farm/farm-6.png"
+        ]
+    },
+    {
+        "id": "5",
         "slug": "idea-zarvos",
         "title": "Idea Zarvos",
         "category": "Architecture website",
@@ -112,52 +135,6 @@
             "/projects/ideazarvos/ideazarvos-7.png",
             "/projects/ideazarvos/ideazarvos-8.png",
             "/projects/ideazarvos/ideazarvos-9.png"
-        ]
-    },
-    {
-        "id": "5",
-        "slug": "farm-rio",
-        "title": "Farm Rio",
-        "category": "E-commerce",
-        "color": "bg-[#001a4d]",
-        "textColor": "text-white",
-        "image": "/cards/farm-rio.png",
-        "description": [
-            "Farm Rio is one of Brazil’s most beloved fashion brands, known for translating elements of Brazilian culture into bold, expressive prints. The goal of this project was to elevate the brand’s expression in its e-commerce experience, ensuring that the digital channel reflected the same energy and identity found in its products, while supporting a frictionless shopping journey that drives conversion.",
-            "The solution was a simple, minimalist e-commerce structure designed to place the prints at the center of the experience. By avoiding a rigid or overly opinionated interface language, the platform created space for the brand to adapt its expression to each collection, allowing seasonality and visual storytelling to lead the experience.",
-            "Video played a central role in bringing the brand to life online. Rich motion content conveyed the vibrancy of the brand while supporting product understanding—such as fabric texture and fit—as well as comparison and decision-making, key factors for engagement and conversion. On mobile, videos were introduced at key moments of the journey to balance brand storytelling with performance, supporting faster decisions and higher confidence during checkout."
-        ],
-        "designedAt": "Accenture Song",
-        "iconColor": "#fff",
-        "gallery": [
-            "/projects/farm/farm-1.png",
-            "/projects/farm/farm-2.png",
-            "/projects/farm/farm-3.png",
-            "/projects/farm/farm-4.png",
-            "/projects/farm/farm-5.png",
-            "/projects/farm/farm-6.png"
-        ]
-    },
-    {
-        "id": "6",
-        "slug": "claro-flex",
-        "title": "Claro Flex",
-        "category": "Telecom app",
-        "color": "bg-[#ff3b30]",
-        "textColor": "text-white",
-        "image": "/cards/claro.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "designedAt": "Try (WPP Group)",
-        "protected": true,
-        "iconColor": "#000",
-        "gallery": [
-            "/projects/claro/claro-1.png",
-            "/projects/claro/claro-2.png",
-            "/projects/claro/claro-3.png",
-            "/projects/claro/claro-4.png",
-            "/projects/claro/claro-5.png",
-            "/projects/claro/claro-6.png",
-            "/projects/claro/claro-7.png"
         ]
     },
     {
