@@ -100,19 +100,19 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
                         </div>
 
                         {/* Mobile & Tablet (<1080px) Only: 20+ years and Recognition */}
-                        <div className="min-[1080px]:hidden flex flex-col gap-8 text-white mt-12 mb-4">
+                        <div className="min-[1080px]:hidden flex flex-col gap-8 text-white mt-12 mb-4 leading-normal">
                             <div className="flex flex-col">
-                                <span className="font-medium text-[var(--fs-16)]">20+ years of design</span>
-                                <span className="text-[var(--fs-16)]">Itaú, Work & Co, Accenture Song, VML</span>
+                                <span className="font-medium text-[16px] min-[1920px]:text-[20px]">20+ years of design</span>
+                                <span className="text-[16px] min-[1920px]:text-[20px]">Itaú, Work & Co, Accenture Song, VML</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-medium text-[var(--fs-16)]">Recognition</span>
-                                <span className="text-[var(--fs-16)]">iF, Red Dot, Webby Awards, and others</span>
+                                <span className="font-medium text-[16px] min-[1920px]:text-[20px]">Recognition</span>
+                                <span className="text-[16px] min-[1920px]:text-[20px]">iF, Red Dot, Webby Awards, and others</span>
                             </div>
                         </div>
 
                         {/* Social Links - Mobile & Tablet (<1080px) Only (Scrolls with content) */}
-                        <div className="flex flex-col min-[1080px]:hidden gap-4 text-[var(--fs-16)] text-white mt-12">
+                        <div className="flex flex-col min-[1080px]:hidden gap-4 text-[16px] min-[1920px]:text-[20px] leading-normal text-white mt-12">
                             <a href="mailto:oi@paravela.work" className="custom-link self-start">
                                 oi@paravela.work
                             </a>
@@ -128,7 +128,7 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
             </div>
 
             {/* Social Links - Desktop Only (Fixed Bottom Left) */}
-            <div className="hidden min-[1080px]:flex flex-row gap-8 text-[var(--fs-16)] text-white absolute bottom-[48px] left-[48px] z-50">
+            <div className="hidden min-[1080px]:flex flex-row gap-8 text-[16px] min-[1920px]:text-[20px] leading-normal text-white absolute bottom-[48px] left-[48px] z-50">
                 <a href="mailto:oi@paravela.work" className="custom-link">
                     oi@paravela.work
                 </a>

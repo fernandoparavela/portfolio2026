@@ -80,8 +80,10 @@ export default function Home() {
     if (isAboutOpen) {
       // Allow a frame for layout? Usually safe to set immediately if overlay is open
       updateHeaderOpacity(0);
+      document.title = "Paravela / About";
     } else {
       updateHeaderOpacity(window.scrollY);
+      document.title = "Paravela";
     }
   }, [isAboutOpen]);
 

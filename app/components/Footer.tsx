@@ -41,7 +41,7 @@ export default function Footer({ isAboutOpen, onToggleAbout, isLoaded = true, is
                 transitionDuration: !isLoaded ? '300ms' : '750ms'
             }}
         >
-            <div className={`flex ${isMobile ? 'items-start justify-between' : 'items-end'} w-full pointer-events-auto text-[var(--fs-16)] transition-colors duration-300`}>
+            <div className={`flex ${isMobile ? 'items-start justify-between' : 'items-end'} w-full pointer-events-auto text-[16px] min-[1920px]:text-[20px] leading-normal transition-colors duration-300`}>
                 <div ref={headerRef} className={`flex flex-col md:flex-row w-full md:w-[91.66%]`}>
                     {/* First 50% Wrapper (Now part of group) */}
                     <div className={`flex flex-col ${isMobile ? 'w-auto' : 'md:flex-row md:w-[54.54%] items-end'}`}>
@@ -59,7 +59,7 @@ export default function Footer({ isAboutOpen, onToggleAbout, isLoaded = true, is
                         {isMobile && (
                             <button
                                 onClick={onToggleAbout}
-                                className={`custom-link text-left mt-6 font-normal text-[var(--fs-16)] w-fit transition-opacity duration-300 ${isAboutOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                                className={`custom-link text-left mt-6 font-normal text-[16px] min-[1920px]:text-[20px] w-fit transition-opacity duration-300 ${isAboutOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                                 style={{ color: '#000000' }}
                             >
                                 About
