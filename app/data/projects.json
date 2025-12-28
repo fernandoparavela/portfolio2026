@@ -34,8 +34,7 @@
         "image": "/cards/deutsche-telekom.png",
         "description": [
             "In 2023, Deutsche Telekom partnered with Work & Co to redefine its digital experience and brand expression. As part of this program, one initiative focused on reimagining the future of TV and shaping Deutsche Telekom’s strategic direction in the segment.",
-            "The work resulted in nearly 50 concepts outlining a vision for a hyper-personalized and context-aware TV experience powered by AI. Several concepts addressed the declining relevance of traditional live TV by enhancing on-demand viewing through smarter content curation and adaptation to individual viewing behaviors—such as breaking movies into shorter episodes or assembling personalized on-demand schedules from live content.",
-            "At the same time, the concepts strengthened live experiences where they still matter most, with sports as a key focus. Ideas included personalized sports timelines and live social interaction layers. Together, concepts around personalization, intent recognition, and second-screen interaction connected live and on-demand viewing, outlining a future where TV is intelligent, adaptive, and deeply personal."
+            "The project delivered nearly 50 concepts for a hyper-personalized, AI-powered TV experience. The ideas enhanced on-demand viewing with behavior-driven features such as breaking movies into shorter episodes and creating personalized schedules from live content, while also strengthening relevant live TV experiences, such as sports, through personalized timelines and social interaction layers. Together, they connect live and on-demand viewing into an experience that is intelligent, adaptive, and deeply personal."
         ],
         "designedAt": "Work & Co",
         "protected": true,
@@ -69,9 +68,9 @@
         "textColor": "text-black",
         "image": "/cards/vivo.png",
         "description": [
-            "In 2022, Vivo—part of the Telefónica group and the largest telecommunications company in Brazil—began repositioning to expand beyond traditional telecom services into technology solutions, including smart home and residential automation.",
-            "In Brazil, smart home solutions remain a niche category, and adoption is mainly limited by perceived complexity among mass-market customers, rather than price. To address this, Vivo leveraged its nationwide workforce to offer in-home consulting and installation. Reducing friction not only in adoption but also in daily use, the Vivo Casa Inteligente app was designed as a simple control layer, validated through usability testing with Vivo’s target audience, and tailored to be more accessible for this segment than tools such as Google Home, Amazon Alexa, or Smart Life. The app combines device control, integrated support, and lightweight educational content.",
-            "To build awareness at scale, an educational experience was also added to Vivo’s main app. It explains the smart home offering and allows customers to explore it through a guided virtual tour, helping a broad audience understand the value of connected-home solutions before adoption."
+            "In 2022, Vivo — part of the Telefônica group and the largest telecommunications company in Brazil — began repositioning its business to move beyond traditional telecom services into technology solutions, including smart home and residential automation.",
+            "In Brazil, smart home adoption remains a niche category, limited more by perceived complexity than by price. To address this, Vivo leveraged its nationwide workforce to provide in-home consulting and installation, reducing friction both at onboarding and in daily use. The Vivo Casa Inteligente app serves as a simple, more accessible control layer — validated through usability testing with the brand’s target audience — and combines device control, integrated support, and lightweight educational content, positioning it as easier to use than tools like Google Home, Amazon Alexa, or Smart Life.",
+            "To build awareness at scale, Vivo also introduced an educational experience inside its main app, explaining the smart home offering and allowing customers to explore it through a guided virtual tour before adoption."
         ],
         "designedAt": "Work & Co",
         "iconColor": "#000",
@@ -118,8 +117,8 @@
         "textColor": "text-white",
         "image": "/cards/idea-zarvos.png",
         "description": [
-            "IdeaZarvos is a real estate developer with the soul of an architecture studio, known for partnering with internationally recognized architects to create distinctive buildings that have reshaped São Paulo’s urban landscape. The challenge was to translate this vision into a digital experience that could inspire, inform, and convert.",
-            "Launched in 2020, the website works both as an immersive gallery of architectural projects and as a lead-generation and sales-support channel. A restrained modernist interface minimizes visual friction and keeps focus on the photography, helping users explore projects, form intent, and move naturally toward contact. Subtle motion—such as shifting shadows or gentle movement in trees—adds a tactile quality to the experience, encouraging deeper engagement with the spaces. By combining emotional resonance with clarity and usability, the site strengthens connection with the brand and supports high-quality lead generation."
+            "IdeaZarvos is a real estate developer with the soul of an architecture studio, known for partnering with internationally recognized architects to create distinctive buildings that have reshaped São Paulo’s urban landscape. Despite its strong reputation, the company needed to expand its digital presence to better translate the brand’s value and support business growth.",
+            "Launched in 2020, the website functions both as an immersive gallery of architectural projects and as a lead-generation channel. Its restrained modernist interface minimizes visual friction and keeps the focus on photography, while subtle motion — such as shifting shadows or gentle movement in trees — adds a tactile sense of presence. By balancing emotion, clarity, and usability, the experience strengthens brand connection and supports high-quality leads."
         ],
         "awards": "Brasil Design Awards 2021",
         "designedAt": "Try (WPP Group)",
@@ -144,7 +143,7 @@
         "color": "bg-[#009966]",
         "textColor": "text-black",
         "image": "/cards/saint-paul.png",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "description": "A snapshot of projects that explore different disciplines, collaborators, and problem spaces, collectively reflecting the evolution of my practice as a designer in recent years.",
         "iconColor": "#fff",
         "gallery": [
             "/projects/archive/archive-1.png",
