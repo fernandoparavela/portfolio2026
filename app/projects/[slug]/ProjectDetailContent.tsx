@@ -81,6 +81,8 @@ function ProjectContent({ project }: { project: Project }) {
             const galleryHeight = containerRect.height;
 
             if (galleryHeight === 0) {
+                const vh = window.innerHeight;
+                const goldenRatio = vh - (vh / 1.618);
                 if (sidebarRef.current) {
                     sidebarRef.current.style.position = 'absolute';
                     sidebarRef.current.style.top = `${goldenRatio}px`;
@@ -111,7 +113,7 @@ function ProjectContent({ project }: { project: Project }) {
             const naturalTop = containerRect.top + goldenRatio;
             const naturalBottom = naturalTop + contentHeight;
 
-            if (naturalBottom <= anchorBottom && contentHeight <= (vh / 1.618)) {
+            if (naturalBottom <= anchorBottom) {
                 const isTablet = window.innerWidth >= 768 && window.innerWidth < 1280;
                 sidebarRef.current.style.position = 'fixed';
                 sidebarRef.current.style.bottom = '0px';

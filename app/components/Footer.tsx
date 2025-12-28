@@ -5,7 +5,6 @@ interface FooterProps {
     onToggleAbout: () => void;
     isLoaded?: boolean;
     isMobile?: boolean; // Added isMobile prop
-    isMobile?: boolean; // Added isMobile prop
     headerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
