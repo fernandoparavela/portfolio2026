@@ -29,7 +29,7 @@ export default function PasswordGate({ children, projectTitle }: { children: Rea
             {/* Header */}
             <div className="fixed left-0 top-0 p-[48px] z-10">
                 <div className="flex items-center gap-1 text-[16px]">
-                    <Link href="/" className="underline hover:no-underline">
+                    <Link href="/" className="custom-link font-normal">
                         Projects
                     </Link>
                     <span>/</span>
