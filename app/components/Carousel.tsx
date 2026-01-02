@@ -1,4 +1,3 @@
-'use client';
 
 import { useRef, useEffect, useState } from 'react';
 import { projects } from '../data/projects';
@@ -35,11 +34,16 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
             if (maxScroll <= 0) return;
             const progress = Math.min(1, Math.max(0, container.scrollLeft / maxScroll));
 
-            const baseGap = isHugeScreen ? 80 : 0;
-            const reductionFactor = isHugeScreen ? 90 : 5;
-            const gap = baseGap - (progress * reductionFactor);
+            // Logic: Base gap is static in layout. 
+            // We calculate how much we want to shift each subsequent card.
+            // Expansion (Positive offset) for all desktop breakpoints.
+            // "Very very subtle" -> 5px total expansion over the scroll area.
 
-            container.style.setProperty('--card-gap', `${gap}px`);
+            const gapDelta = 5;
+            const offset = progress * gapDelta;
+
+            // We use a CSS variable for the single shift unit, then multiply by index in CSS
+            container.style.setProperty('--gap-offset', `${offset}px`);
         };
 
         lenis.on('scroll', handleScroll);
@@ -93,6 +97,7 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
             className={`w-full ${isMobile ? 'touch-pan-y' : 'h-full md:overflow-x-auto overflow-y-auto md:overflow-y-hidden pointer-events-auto'} no-scrollbar bg-zinc-50 dark:bg-zinc-900`}
             style={{
                 '--card-gap': isMobile ? '12px' : (isHugeScreen ? '80px' : '0px'),
+                '--gap-offset': '0px',
                 paddingTop: isMobile ? 'calc(100vh - (100vh / 1.618))' : '0'
             } as React.CSSProperties}
         >
@@ -103,8 +108,10 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
                         className={`w-full md:w-auto shrink-0 transition-all duration-700 ease-out ${index === 0 ? '' : 'md:ml-[var(--card-gap)]'}`}
                         style={{
                             transitionDelay: `${index * 50}ms`,
-                            transform: isMobile ? 'none' : `rotate(${item.rotation}deg) scale(${isHugeScreen ? 1.25 : 1})`,
-                            transitionProperty: isLoaded ? 'all' : 'none'
+                            transform: isMobile
+                                ? 'none'
+                                : `translateX(calc(var(--gap-offset) * ${index})) rotate(${item.rotation}deg) scale(${isHugeScreen ? 1.25 : 1})`,
+                            transitionProperty: isLoaded ? 'opacity, filter' : 'none'
                         }}
                     >
                         <Card
