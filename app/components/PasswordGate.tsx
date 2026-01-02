@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-export default function PasswordGate({ children, projectTitle }: { children: React.ReactNode, projectTitle: string }) {
+export default function PasswordGate({ children, projectTitle, expectedPassword }: { children: React.ReactNode, projectTitle: string, expectedPassword?: string }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
@@ -11,8 +11,10 @@ export default function PasswordGate({ children, projectTitle }: { children: Rea
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Simple hardcoded password for now
-        if (password === '1234') {
+        // Use expectedPassword if provided, otherwise fallback to default (or maybe strictly require it)
+        const targetPassword = expectedPassword || '1234';
+
+        if (password === targetPassword) {
             setIsAuthenticated(true);
             setError(false);
         } else {

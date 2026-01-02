@@ -38,6 +38,7 @@
         ],
         "designedAt": "Work & Co",
         "protected": true,
+        "password": "deutche@!0000",
         "iconColor": "#000",
         "gallery": [
             "/projects/deutsche/deutsche-1.png",

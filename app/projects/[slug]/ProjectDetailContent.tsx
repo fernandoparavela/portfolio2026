@@ -14,6 +14,7 @@ interface Project {
     awards?: string;
     designedAt?: string;
     protected?: boolean;
+    password?: string;
     gallery?: string[];
     slug: string;
 }
@@ -321,7 +322,7 @@ function ProjectContent({ project }: { project: Project }) {
 export default function ProjectDetailContent({ project }: { project: Project }) {
     if (project.protected) {
         return (
-            <PasswordGate projectTitle={project.title}>
+            <PasswordGate projectTitle={project.title} expectedPassword={project.password}>
                 <ProjectContent project={project} />
             </PasswordGate>
         );
