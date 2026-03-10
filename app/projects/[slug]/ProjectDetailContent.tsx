@@ -182,7 +182,7 @@ function ProjectContent({ project }: { project: Project }) {
 
     return (
         <div
-            className={`flex flex-col md:flex-row ${isMobile ? 'min-h-[100dvh]' : 'min-h-screen'} bg-white dark:bg-zinc-900 text-black dark:text-white font-sans selection:bg-black selection:text-white relative`}
+            className={`flex flex-col md:flex-row ${isMobile ? 'min-h-[100dvh]' : 'min-h-screen'} bg-white text-black font-sans selection:bg-black selection:text-white relative`}
             onClick={handleBack}
             style={{ cursor: `url('/close.svg') 16 16, auto` }}
         >
@@ -220,10 +220,10 @@ function ProjectContent({ project }: { project: Project }) {
                             <div className="max-w-md flex flex-col gap-[12px]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
-                                        <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">{p}</p>
+                                        <p key={i} className="leading-relaxed text-[16px] text-black">{p}</p>
                                     ))
                                 ) : (
-                                    <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                    <p className="leading-relaxed text-[16px] text-black">
                                         {project.description || "Project description goes here."}
                                     </p>
                                 )}
@@ -264,10 +264,10 @@ function ProjectContent({ project }: { project: Project }) {
                             <div ref={mobileContentRef} className="max-w-md flex flex-col gap-[12px]">
                                 {Array.isArray(project.description) ? (
                                     (project.description as string[]).map((p, i) => (
-                                        <p key={i} className="leading-relaxed text-[16px] text-black dark:text-white">{p}</p>
+                                        <p key={i} className="leading-relaxed text-[16px] text-black">{p}</p>
                                     ))
                                 ) : (
-                                    <p className="leading-relaxed text-[16px] text-black dark:text-white">
+                                    <p className="leading-relaxed text-[16px] text-black">
                                         {project.description || "Project description goes here."}
                                     </p>
                                 )}
@@ -301,9 +301,9 @@ function ProjectContent({ project }: { project: Project }) {
                         <div className="flex flex-col gap-[12px]">
                             {(!project.gallery || project.gallery.length === 0) && (
                                 <>
-                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">Image 1</div>
-                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">Image 2</div>
-                                    <div className="w-full aspect-[3/2] bg-zinc-100 dark:bg-zinc-800 rounded-[8px] flex items-center justify-center text-black">Image 3</div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 rounded-[8px] flex items-center justify-center text-black">Image 1</div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 rounded-[8px] flex items-center justify-center text-black">Image 2</div>
+                                    <div className="w-full aspect-[3/2] bg-zinc-100 rounded-[8px] flex items-center justify-center text-black">Image 3</div>
                                 </>
                             )}
                             {project.gallery?.map((img, index) => (

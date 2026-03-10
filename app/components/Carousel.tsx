@@ -94,7 +94,7 @@ export default function Carousel({ isLoaded }: { isLoaded?: boolean }) {
     return (
         <div
             ref={scrollContainerRef}
-            className={`w-full ${isMobile ? 'touch-pan-y' : 'h-full md:overflow-x-auto overflow-y-auto md:overflow-y-hidden pointer-events-auto'} no-scrollbar bg-zinc-50 dark:bg-zinc-900`}
+            className={`w-full ${isMobile ? 'touch-pan-y' : 'h-full md:overflow-x-auto overflow-y-auto md:overflow-y-hidden pointer-events-auto'} no-scrollbar bg-zinc-50`}
             style={{
                 '--card-gap': isMobile ? '12px' : (isHugeScreen ? '80px' : '0px'),
                 '--gap-offset': '0px',
