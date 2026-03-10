@@ -103,7 +103,7 @@ export default function AboutContent({ isVisible, onClose, isMobile: propIsMobil
                         <div className="min-[1080px]:hidden flex flex-col gap-8 text-white mt-12 mb-4 leading-normal">
                             <div className="flex flex-col">
                                 <span className="font-medium text-[16px] min-[1920px]:text-[20px]">20+ years of design</span>
-                                <span className="text-[16px] min-[1920px]:text-[20px]">Itaú, Work & Co, Accenture Song, VML</span>
+                                <span className="text-[16px] min-[1920px]:text-[20px]">Nubank, Work & Co, Accenture Song, VML</span>
                             </div>
                             <div className="flex flex-col">
                                 <span className="font-medium text-[16px] min-[1920px]:text-[20px]">Recognition</span>

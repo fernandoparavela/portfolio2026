@@ -68,7 +68,7 @@ export default function Footer({ isAboutOpen, onToggleAbout, isLoaded = true, is
 
                         <div className={`flex flex-col ${isMobile ? 'hidden' : 'hidden min-[1080px]:flex w-auto mx-auto'}`}>
                             <span className="font-medium">20+ years of design</span>
-                            <span className="font-normal">Itaú, Work & Co, Accenture Song, VML</span>
+                            <span className="font-normal">Nubank, Work & Co, Accenture Song, VML</span>
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@ export default function Footer({ isAboutOpen, onToggleAbout, isLoaded = true, is
                         {/* Content for 768px - 1080px (Swapped from Col 2) */}
                         <div className="flex flex-col min-[1080px]:hidden">
                             <span className="font-medium">20+ years of design</span>
-                            <span className="font-normal">Itaú, Work & Co, Accenture Song, VML</span>
+                            <span className="font-normal">Nubank, Work & Co, Accenture Song, VML</span>
                         </div>
 
                         {/* Content for >= 1080px (Original Col 3) */}
